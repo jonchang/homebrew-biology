@@ -17,6 +17,6 @@ class Velvet < Formula
   end
 
   def test
-    quiet_system "#{bin}/velveth"
+    system "#{bin}/velveth"
   end
 end
