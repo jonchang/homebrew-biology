@@ -7,11 +7,12 @@ class Velvet < Formula
   url 'https://github.com/dzerbino/velvet.git', :revision => 'aeb11f8058e4ea794a6ec425c168ffcbbfd1bbbc'
   head 'https://github.com/dzerbino/velvet.git'
 
+  # patch per comment in Makefile
+  def patches
+    DATA
+  end
+
   def install
-    inreplace 'Makefile' do |s|
-      # recommended in Makefile for compiling on Mac OS X
-      s.change_make_var! "CFLAGS", "-Wall -m64"
-    end
     system "make MAXKMERLENGTH=96"
     bin.install 'velveth', 'velvetg'
   end
@@ -20,3 +21,17 @@ class Velvet < Formula
     system "#{bin}/velveth"
   end
 end
+__END__
+diff --git a/Makefile b/Makefile
+index 5d91631..640cdca 100644
+--- a/Makefile
++++ b/Makefile
+@@ -8,7 +8,7 @@ CATEGORIES=2
+ DEF = -D MAXKMERLENGTH=$(MAXKMERLENGTH) -D CATEGORIES=$(CATEGORIES)
+ 
+ # Mac OS users: uncomment the following lines
+-# CFLAGS = -Wall -m64
++CFLAGS = -Wall -m64
+ 
+ # Sparc/Solaris users: uncomment the following line
+ # CFLAGS = -Wall -m64
