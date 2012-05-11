@@ -4,7 +4,7 @@ class Velvet < Formula
   version '1.2.05'
   homepage 'http://www.ebi.ac.uk/~zerbino/velvet/'
   # doesn't seem to have stable tarballs
-  url 'https://github.com/dzerbino/velvet.git', :tag => 'aeb11f8058e4ea794a6ec425c168ffcbbfd1bbbc'
+  url 'https://github.com/dzerbino/velvet.git', :revision => 'aeb11f8058e4ea794a6ec425c168ffcbbfd1bbbc'
   head 'https://github.com/dzerbino/velvet.git'
 
   def install
@@ -14,5 +14,9 @@ class Velvet < Formula
     end
     system "make MAXKMERLENGTH=96"
     bin.install 'velveth', 'velvetg'
+  end
+
+  def test
+    quiet_system "#{bin}/velveth"
   end
 end
