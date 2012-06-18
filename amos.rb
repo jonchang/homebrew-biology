@@ -6,6 +6,7 @@ class Amos < Formula
   sha1 '28e799e37713594ba7147d300ecae6574beb14a4'
 
   def install
+    ENV.deparallelize
     system "./configure", "--prefix=#{prefix}"
     system "make install"
   end
