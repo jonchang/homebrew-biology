@@ -13,7 +13,8 @@ class Velvet < Formula
   end
 
   def install
-    system "make MAXKMERLENGTH=96"
+    # don't make docs because it requires pdflatex
+    system "make cleanobj zlib obj velveth velvetg MAXKMERLENGTH=96"
     bin.install 'velveth', 'velvetg'
   end
 
