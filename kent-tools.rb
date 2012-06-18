@@ -2,10 +2,10 @@ require 'formula'
 
 class KentTools < Formula
   homepage 'http://genome.ucsc.edu/'
-  url 'http://hgdownload.cse.ucsc.edu/admin/jksrc.v266.zip'
+  url 'http://hgdownload.cse.ucsc.edu/admin/jksrc.v268.zip'
   head 'git://genome-source.cse.ucsc.edu/kent.git' # incredibly slow
-  version '266'
-  md5 'c0023ab002378841d2388c155a0d142e'
+  version '268'
+  md5 'f626a943ecb06afc464a192e2fd6dd1d'
 
   # don't install things that depend on mysql
   def patches
