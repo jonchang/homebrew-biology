@@ -4,7 +4,6 @@ class KentTools < Formula
   homepage 'http://genome.ucsc.edu/'
   url 'http://hgdownload.cse.ucsc.edu/admin/jksrc.v268.zip'
   head 'git://genome-source.cse.ucsc.edu/kent.git' # incredibly slow
-  version '268'
   md5 'f626a943ecb06afc464a192e2fd6dd1d'
 
   # don't install things that depend on mysql
@@ -20,8 +19,8 @@ class KentTools < Formula
 
     # set up build environment
     ENV['MACHTYPE'] = MacOS.prefer_64_bit? ? "x86_64" : "i386"
-    mkdir "#{prefix}/bin"
-    ENV['BINDIR'] = ENV['SCRIPTS'] = "#{prefix}/bin"
+    mkdir "#{bin}"
+    ENV['BINDIR'] = ENV['SCRIPTS'] = "#{bin}"
 
     system 'cd kent/src/lib; make'
     system 'cd kent/src/jkOwnLib; make'
