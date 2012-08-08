@@ -12,7 +12,7 @@ class KentTools < Formula
   end
 
   fails_with :clang do
-    build 318
+    build 421
     cause "Who knows"
   end
 
