@@ -11,6 +11,11 @@ class KentTools < Formula
     DATA
   end
 
+  fails_with :clang do
+    build 318
+    cause "Who knows"
+  end
+
   def install
     # libpng needs special handling
     ENV.libpng
