@@ -3,7 +3,6 @@ require 'formula'
 class Velvet < Formula
   version '1.2.07'
   homepage 'http://www.ebi.ac.uk/~zerbino/velvet/'
-  # doesn't seem to have stable tarballs
   url 'https://github.com/dzerbino/velvet.git', :revision => 'bfaff26f78f1777e338953267ae9cc9f84039a22'
   head 'https://github.com/dzerbino/velvet.git'
 
@@ -14,7 +13,7 @@ class Velvet < Formula
 
   def install
     # don't make docs because it requires pdflatex
-    system "make cleanobj zlib obj velveth velvetg MAXKMERLENGTH=96"
+    system "make velveth velvetg MAXKMERLENGTH=96"
     bin.install 'velveth', 'velvetg'
   end
 
