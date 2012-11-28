@@ -10,7 +10,7 @@ class Phylip < Formula
   def install
     system "cd src;make all;make put EXEDIR=#{bin}"
     bin.cd do
-      rm Dir['font*'] # remove the fonts they install
+      rm Dir['font*'] # Remove installed fonts
     end
   end
 end

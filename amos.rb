@@ -10,4 +10,10 @@ class Amos < Formula
     system "./configure", "--prefix=#{prefix}"
     system "make install"
   end
+
+  def caveats; <<-EOS.undent
+    Perl modules have been placed in
+      #{lib}
+    EOS
+  end
 end

@@ -9,12 +9,17 @@ class Hyphy < Formula
   depends_on 'cmake' => :build
 
   def patches
-    # allow single-threaded builds
-    "https://github.com/jonchang/hyphy/commit/2747d1526ea6d4c90537b4b343fc5849e7d82d59.diff"
+    # Single-threaded builds
+    'https://github.com/veg/hyphy/commit/c90bf9b93218a38e4c9f12150ffe36eb65ec3a50.diff'
   end
 
   def install
     system "cmake", "-DINSTALL_PREFIX=#{prefix}", ".", *std_cmake_args
-    system "make SP;make install"
+    system "make SP; make install"
+  end
+
+  def caveats; <<-EOS.undent
+    This formula builds a single-threaded version of HyPhy.
+    EOS
   end
 end

@@ -2,73 +2,38 @@ require 'formula'
 
 class KentTools < Formula
   homepage 'http://genome.ucsc.edu/'
+  # HEAD-only because there are no stable tarballs
   head 'http://hgdownload.cse.ucsc.edu/admin/jksrc.zip'
   devel do
     url 'git://genome-source.cse.ucsc.edu/kent.git' # incredibly slow
   end
 
-  # don't install things that depend on mysql
-  def patches
-    DATA
-  end
-
   fails_with :clang do
     build 421
-    cause "Who knows"
   end
+
+  depends_on :libpng
+  depends_on 'mysql'
 
   def install
-    # libpng needs special handling
-    ENV.libpng
-    ENV['PNGLIB'] = '-L/usr/X11/lib'
-    ENV['PNGINCL'] = '-I/usr/X11/include'
+    # Set up build environment per src/product/README.building.source
+    ENV['PNGLIB'] = "-L#{MacOS::X11.lib}"
+    ENV['PNGINCL'] = "-I#{MacOS::X11.include}"
 
-    # set up build environment
+    mysql = Formula.factory 'mysql'
+    ENV['MYSQLLIBS'] = "#{mysql.lib}/libmysqlclient.a -lz"
+    ENV['MYSQLINC'] = mysql.include
+
     ENV['MACHTYPE'] = MacOS.prefer_64_bit? ? "x86_64" : "i386"
-    mkdir "#{bin}"
-    ENV['BINDIR'] = ENV['SCRIPTS'] = "#{bin}"
+    bin.mkdir
+    ENV['BINDIR'] = ENV['SCRIPTS'] = bin
 
-    system 'cd kent/src/lib; make'
-    system 'cd kent/src/jkOwnLib; make'
-    system 'cd kent/src/utils; make all'
+    system 'cd src; make userApps'
+  end
+
+  def caveats; <<-EOS.undent
+    This formula will only install the standalone tools located at
+      http://hgdownload.cse.ucsc.edu/admin/exe/
+    EOS
   end
 end
-__END__
-diff --git a/kent/src/utils/makefile b/kent/src/utils/makefile
-index 90b756a..3bd35f5 100644
---- a/kent/src/utils/makefile
-+++ b/kent/src/utils/makefile
-@@ -124,16 +124,13 @@ DIRS = \
- 	nibSize \
- 	nt4Frag \
- 	paraFetch \
--	pslLiftSubrangeBlat \
- 	pslToPslx \
- 	pslToXa \
- 	randomLines \
--	raSqlQuery \
- 	raToTab \
- 	raToLines \
- 	rmFaDups \
- 	rowsToCols \
--	scaffoldFaToAgp \
- 	scrambleFa \
- 	sizeof \
- 	spacedToTab \
-@@ -144,7 +141,6 @@ DIRS = \
- 	subColumn \
- 	subs \
- 	tableSum \
--	tailLines \
- 	textHist2 \
- 	textHistogram \
- 	tickToDate \
-@@ -158,7 +154,6 @@ DIRS = \
- 	upper \
- 	venn \
- 	verticalSplitSqlTable \
--	weedLines \
- 	wigCorrelate \
- 	wigToBigWig \
- 	wigTestMaker \
-

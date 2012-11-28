@@ -7,12 +7,21 @@ class Populations < Formula
 
   depends_on 'gettext'
 
+  fails_with :llvm do
+    build 2335
+    cause <<-EOS.undent
+      Undefined symbols:
+        biolib::vecteurs::Matrice<long double>::Matrice()
+      EOS
+    end
+
   def install
     gettext = Formula.factory 'gettext'
     ENV.append 'CPPFLAGS', "-I#{gettext.include}"
     ENV.append 'LDFLAGS', "-I#{gettext.lib} -lintl"
 
-    system "./configure", "--disable-debug", "--disable-dependency-tracking",
+    system "./configure", "--disable-debug",
+                          "--disable-dependency-tracking",
                           "--prefix=#{prefix}"
     system "make install"
   end
