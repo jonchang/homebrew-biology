@@ -21,10 +21,15 @@ class Beast17 < Formula
   end
 
   test do
-    system "beast -help"
+    system "beast-1.7 -help"
   end
 
   def caveats; <<-EOS.undent
+    This installation can coexist with other installs of BEAST.
+    All scripts are suffixed with '-1.7':
+
+      beast-1.7 -version
+
     Examples are installed in:
       #{opt_prefix}/examples/
   EOS
