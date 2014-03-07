@@ -9,17 +9,18 @@ class Bamm < Formula
   def install
     system "cmake", ".", *std_cmake_args
     system "make", "install"
-    share.install "skeleton/BAMMtools", "doc", "examples"
+    share.install "doc", "examples"
   end
 
   def caveats; <<-EOS.undent
-  Documentation has been installed to:
+  Documentation and examples have been installed to:
+
     #{opt_prefix}/share/docs
     #{opt_prefix}/share/examples
 
-  Install the R package with:
-    brew sh
-    R CMD install #{opt_prefix}/share/BAMMtools && exit
+  To install the R package, start R then:
+
+    install.packges("BAMMtools")
   EOS
   end
 end
