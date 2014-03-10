@@ -3,26 +3,22 @@ require "requirement"
 
 class RRequirement < Requirement
   fatal true
-  satisfy { which "R" }
-  def message; "Install R with `brew install homebrew/science/r`"; end
+  satisfy { which "R" and which "Rscript" }
+  def message; "Install R with: brew install homebrew/science/r"; end
 end
 
 class ApeRequirement < Requirement
   fatal true
   satisfy { system "Rscript", "-e", "library(ape)" }
-  def message; <<-EOS.undent
-    Install ape with:
-       Rscript -e 'install.packages("ape")'
-    EOS
-  end
+  def message; %q{Install ape with: Rscript -e 'install.packages("ape")'}; end
 end
 
 class Bamm < Formula
   homepage "http://bamm-project.org/"
 
   option "without-bammtools", "don't install bammtools (requires R)"
-  depends_on ApeRequirement if build.with? "bammtools"
   depends_on RRequirement if build.with? "bammtools"
+  depends_on ApeRequirement if build.with? "bammtools"
 
   stable do
     url "http://www-personal.umich.edu/~carlosja/bamm-1.0.0.tar.gz"
@@ -50,7 +46,9 @@ class Bamm < Formula
   depends_on "cmake" => :build
 
   def install
-    system "cmake", ".", *std_cmake_args
+    # None should work fine, so this needs to be fixed upstream
+    args = *std_cmake_args - %w{-DCMAKE_BUILD_TYPE=None}
+    system "cmake", ".", "-DCMAKE_BUILD_TYPE=Release", *args
     system "make", "install"
 
     if build.head?
@@ -68,8 +66,8 @@ class Bamm < Formula
   EOS
   end
 
-  def test
-    # Doesn't actually work, lol
-    system "bamm", "-c", share + "diversification/anoles/divcontrol.txt"
+  test do
+    cp Dir[share + "diversification/anoles/*"], testpath
+    system bin/"bamm", "-c", "divcontrol.txt"
   end
 end
