@@ -10,7 +10,7 @@ class R8s < Formula
 
   def install
     inreplace "makefile" do |s|
-      s.change_make_var! "LPATH", "-L#{Formula.factory('gfortran').opt_prefix}/gfortran/lib"
+      s.change_make_var! "LPATH", "-L#{Formula['gfortran'].opt_prefix}/gfortran/lib"
     end
     system "make"
     bin.install "r8s"
