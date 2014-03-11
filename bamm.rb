@@ -45,10 +45,14 @@ class Bamm < Formula
 
   depends_on "cmake" => :build
 
+  def patches
+    # Fixes cmake issue
+    "https://github.com/macroevolution/bamm/commit/7bc61a91654f7.patch" unless build.head?
+  end
+
   def install
     # None should work fine, so this needs to be fixed upstream
-    args = *std_cmake_args - %w{-DCMAKE_BUILD_TYPE=None}
-    system "cmake", ".", "-DCMAKE_BUILD_TYPE=Release", *args
+    system "cmake", ".", *std_cmake_args
     system "make", "install"
 
     if build.head?
