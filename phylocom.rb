@@ -11,11 +11,11 @@ class Phylocom < Formula
       system "make"
       bin.install "phylocom", "ecovolve", "phylomatic"
     end
-    share.install "example_data", "tools"
+    share.install "example_data"
   end
 
   def caveats; <<-EOS.undent
-  Example data and misc. tools have been installed to:
+  Example data have been installed to:
     #{share}
   EOS
   end
