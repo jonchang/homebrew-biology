@@ -1,22 +1,29 @@
-require "formula"
-
 class R8s < Formula
+  desc "estimate rates and divergence times on phylogenetic trees"
   homepage "http://loco.biosci.arizona.edu/r8s/"
-  version "1.8"
   url "http://loco.biosci.arizona.edu/r8s/r8s.dist.tgz"
-  sha1 "c909c1e83ad2a0fbd683db4e8c42caa0868f18fd"
+  version "1.8"
+  sha256 "a388d70275abfabf73a84a4346175ae94b3a3b2f1f399a4d3657bb430a22f903"
 
   depends_on :fortran
 
   def install
+    fortranlibs = File.dirname `gfortran --print-file-name libgfortran.dylib`
     inreplace "makefile" do |s|
-      s.change_make_var! "LPATH", "-L#{Formula['gfortran'].opt_prefix}/gfortran/lib"
+      s.change_make_var! "LPATH", "-L#{fortranlibs}"
     end
     system "make"
     bin.install "r8s"
+    share.install Dir["SAMPLE_*", "*.pdf"]
   end
 
-  def caveats
-    'This formula requires a brewed gfortran.'
+  def caveats; <<-EOS.undent
+    The manual and example files were installed to
+      #{opt_prefix}/share
+    EOS
+  end
+
+  test do
+    assert_match(/r8s version #{version}/, shell_output("#{bin}/r8s -v -b", 1))
   end
 end
