@@ -1,5 +1,5 @@
 class R8s < Formula
-  desc "estimate rates and divergence times on phylogenetic trees"
+  desc "Estimate rates and divergence times on phylogenetic trees"
   homepage "http://loco.biosci.arizona.edu/r8s/"
   url "http://loco.biosci.arizona.edu/r8s/r8s.dist.tgz"
   version "1.8"
@@ -8,9 +8,11 @@ class R8s < Formula
   depends_on :fortran
 
   def install
-    fortranlibs = File.dirname `gfortran --print-file-name libgfortran.dylib`
+    # Tell r8s where libgfortran is located
+    obj_name "libgfortran.so" if OS.linux? else "libgfortran.dylib"
+    fortran_lib = File.dirname `#{ENV.fc} --print-file-name #{obj_name}`
     inreplace "makefile" do |s|
-      s.change_make_var! "LPATH", "-L#{fortranlibs}"
+      s.change_make_var! "LPATH", "-L#{fortran_lib}"
     end
     system "make"
     bin.install "r8s"
