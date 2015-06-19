@@ -9,7 +9,7 @@ class R8s < Formula
 
   def install
     # Tell r8s where libgfortran is located
-    obj_name "libgfortran.so" if OS.linux? else "libgfortran.dylib"
+    obj_name = OS.linux? ? "libgfortran.so" : "libgfortran.dylib"
     fortran_lib = File.dirname `#{ENV.fc} --print-file-name #{obj_name}`
     inreplace "makefile" do |s|
       s.change_make_var! "LPATH", "-L#{fortran_lib}"
