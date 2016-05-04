@@ -44,6 +44,7 @@ class Treepl < Formula
       ENV.append "CFLAGS", "-I#{nlopt.include}"
       ENV.append "LDFLAGS", "-L#{nlopt.lib}"
       ENV.append "LDFLAGS", "-L#{libexec}/lib64"
+      ENV.append "LDFLAGS", "-Wl,-rpath,/#{libexec}/lib64"
       ENV.append "LIBS", "-lnlopt_cxx"
 
       # Makefile ignores everything configure tells it so...
