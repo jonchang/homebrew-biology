@@ -1,18 +1,27 @@
-require 'formula'
-
 class Scythe < Formula
-  version '0.981'
-  homepage 'https://github.com/vsbuffalo/scythe'
-  url 'https://github.com/vsbuffalo/scythe.git',
-      :revision => '872a54c996a1a9f5b3f5210d92bcbd8d7efcaa04'
-  head 'https://github.com/vsbuffalo/scythe.git'
+  desc "Bayesian adapter trimmer"
+  homepage "https://github.com/vsbuffalo/scythe"
+  url "https://github.com/vsbuffalo/scythe.git",
+      :revision => "20d3cff7d7f483bd779aff75f861e93708c0a2b5"
+  version "0.994"
+  head "https://github.com/vsbuffalo/scythe.git"
+  # tag "bioinformatics"
 
   def install
-    system 'make build'
-    bin.install 'scythe'
+    system "make", "all"
+    bin.install "scythe"
+    pkgshare.install "testing"
   end
 
-  def test
-    system "#{bin}/scythe --version"
+  def caveats; <<-EOS.undent
+  The example data have been installed to:
+    #{pkgshare}
+  EOS
+  end
+
+  test do
+    cp pkgshare/"testing/btrim_adapters.fa", testpath
+    cp pkgshare/"testing/reads.fastq", testpath
+    system "#{bin}/scythe", "-a", "btrim_adapters.fa", "-o", "trimmed.fa", "reads.fastq"
   end
 end
