@@ -11,7 +11,7 @@ class Roguenarok < Formula
     system "make", "mode=parallel"
     bin.install %W[RogueNaRok-parallel rnr-lsi rnr-mast rnr-prune rnr-tii]
     if build.head?
-      (share/"roguenarok").install(["example", "utils"])
+      pkgshare.install(["example", "utils"])
     end
   end
 
@@ -19,12 +19,14 @@ class Roguenarok < Formula
     if build.head?
       <<-EOS.undent
         The examples and utilities are installed to
-          #{share}/roguenarok
+        #{pkgshare}
       EOS
     end
   end
 
   test do
-    system "false"
+    cp Dir[pkgshare/"example/*"], testpath
+    system "#{bin}/RogueNaRok-parallel", "-i", "150.bs", "-t", "150.tre", "-n", "id", "-T", "2"
+    assert File.exist? "RogueNaRok_droppedRogues.id"
   end
 end
