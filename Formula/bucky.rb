@@ -1,27 +1,28 @@
-require 'formula'
-
 class Bucky < Formula
-  homepage 'http://www.stat.wisc.edu/~ane/bucky/'
-  url 'http://www.stat.wisc.edu/~ane/bucky/v1.4/bucky-1.4.2.tgz'
-  sha1 'c2c8eabfa63aee38f8f0933ccdc77b06377217db'
-
+  desc "Bayesian concordance analysis of gene trees"
+  homepage "http://www.stat.wisc.edu/~ane/bucky/"
+  url "http://www.stat.wisc.edu/~ane/bucky/v1.4/bucky-1.4.4.tgz"
+  sha256 "1621fee0d42314d9aa45d0082b358d4531e7d1d1a0089c807c1b21fbdc4e4592"
+  head "http://www.stat.wisc.edu/~ane/bucky.git"
+  # tag "bioinformatics"
+  # doi "10.1093/bioinformatics/btq539"
 
   def install
-    cd 'src' do
+    cd "src" do
       system "make"
       bin.install "mbsum", "bucky"
     end
-    (share/'bucky').install ["data", "scripts", "doc"]
+    pkgshare.install ["data", "scripts", "doc"]
   end
 
   def caveats
     <<-EOS.undent
       The manual, examples, and scripts are installed to:
-          #{share}/bucky
+          #{pkgshare}/bucky
     EOS
   end
 
   test do
-    system "bucky --version"
+    system "bucky", "--version"
   end
 end
