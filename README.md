@@ -6,18 +6,16 @@ These formulae provide tools for biological research that are too specialized, e
 
 How do I install these formulae?
 --------------------------------
-Just `brew tap jonchang/biology` and then `brew install <formula>`.
+`brew install jonchang/biology/<formula>`
 
-If the formula conflicts with one from homebrew/science or another tap, you can `brew install jonchang/biology/<formula>`.
+Or `brew tap jonchang/biology` and then `brew install <formula>`.
 
-You can also install via URL:
+Or install via URL (which will not receive updates):
 
 ```
-brew install https://raw.github.com/jonchang/homebrew-biology/master/<formula>.rb
+brew install https://raw.githubusercontent.com/jonchang/homebrew-biology/master/<formula>.rb
 ```
 
-Docs
-----
-`brew help`, `man brew`, or the Homebrew [wiki][].
-
-[wiki]:https://github.com/Homebrew/homebrew/wiki
+Documentation
+-------------
+`brew help`, `man brew` or check [Homebrew's documentation](https://github.com/Homebrew/brew/tree/master/share/doc/homebrew#readme).
