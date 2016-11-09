@@ -7,7 +7,7 @@ class Examl < Formula
   # tag "bioinformatics"
   # doi "10.1093/bioinformatics/btv184"
 
-  depends_on :mpi
+  depends_on :mpi => :cc
 
   def install
     cd "parser" do

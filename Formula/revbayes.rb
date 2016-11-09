@@ -1,8 +1,14 @@
-require "formula"
-
 class Revbayes < Formula
-  homepage "https://github.com/revbayes/revbayes"
+  desc "Bayesian phylogenetic inference with graphical models"
+  homepage "https://revbayes.github.io/"
+  url "https://github.com/revbayes/revbayes/archive/v1.0.1-release.tar.gz"
+  version "1.0.1"
+  sha256 "38aa1879da8b886cbc66925ca593fa5d25b2e746f8163298623a1871dcec105f"
   head "https://github.com/revbayes/revbayes.git", :branch => "development"
+  # tag "bioinformatics"
+  # doi "10.1093/sysbio/syw021"
+
+  depends_on :mpi => [:cc, :cxx, :recommended]
 
   depends_on "cmake" => :build
   depends_on "boost"
@@ -16,10 +22,22 @@ class Revbayes < Formula
       system "make"
       bin.install "rb"
     end
+
+    pkgshare.install "examples", "tests"
+  end
+
+  def caveats
+    <<-EOS.undent
+    Example files are installed to:
+      #{pkgshare}
+    EOS
   end
 
   test do
-    system "false"
+    cp pkgshare/"examples/HKY.Rev", testpath
+    cp pkgshare/"tests/data/Primates.nex", testpath
+    mv "Primates.nex", "primates_cytb.nex"
+    system "#{bin}/rb", "HKY.Rev"
   end
 end
 __END__
