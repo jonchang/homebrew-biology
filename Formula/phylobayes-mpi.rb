@@ -5,6 +5,8 @@ class PhylobayesMpi < Formula
 
   depends_on :mpi => :cxx
 
+  conflicts_with "phylobayes"
+
   def install
     cd "sources" do
       system "make"
