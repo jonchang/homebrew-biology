@@ -10,11 +10,6 @@ class Treepl < Formula
 
   needs :openmp
 
-  patch do
-    url "https://patch-diff.githubusercontent.com/raw/blackrim/treePL/pull/19.patch"
-    sha256 "96b17a2ee4f232fc7b1e591ed4e7074268e16992992e2e12f516e1d44d31b670"
-  end
-
   # Check for brewed adol-c
   adolc = Formula["adol-c"]
   if adolc.installed? and Keg.for(adolc.lib).linked?
