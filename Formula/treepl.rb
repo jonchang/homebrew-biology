@@ -1,6 +1,8 @@
 class Treepl < Formula
   desc "dating phylogenies with penalized likelihood"
   homepage "http://blackrim.org/programs/treepl/"
+  url "https://github.com/blackrim/treePL.git", :revision => "3ee6ab1b820c9171eb7c55f3519df3294900e049"
+  version "2016.11.19"
   head "https://github.com/blackrim/treePL.git"
 
   depends_on "autoconf" => :build
@@ -10,18 +12,17 @@ class Treepl < Formula
 
   needs :openmp
 
-  # Check for brewed adol-c
-  adolc = Formula["adol-c"]
-  if adolc.installed? and Keg.for(adolc.lib).linked?
-    onoe "Please unlink Homebrew's ADOL-C before installing treePL:"
-    onoe "    brew unlink adol-c"
-    onoe "    brew install treepl"
-    odie "    brew link adol-c"
-  end
-
   def install
+    # Check for brewed adol-c
+    adolc = Formula["adol-c"]
+    if adolc.installed? and Keg.for(adolc.lib).linked?
+      onoe "Please unlink Homebrew's ADOL-C before building treePL:"
+      onoe "    brew unlink adol-c"
+      onoe "    brew install treepl"
+      odie "    brew link adol-c"
+    end
 
-    # Use the vendored copy of adol-c since Homebrew's version doesn't support OMP
+    # Use the vendored copy of adol-c since Homebrew's version is too new
     cd "deps" do
       system "tar", "xf", "adol-c_git_saved.tar.gz"
       cd "adol-c" do
@@ -34,18 +35,12 @@ class Treepl < Formula
     cd "src" do
       # Tell configure where to find libraries
       nlopt = Formula["nlopt"]
+      ENV.prepend "CPPFLAGS", "-I#{libexec}/include"
       ENV.append "CPPFLAGS", "-I#{nlopt.include}"
-      ENV.append "CPPFLAGS", "-I#{libexec}/include"
       ENV.append "CFLAGS", "-I#{nlopt.include}"
       ENV.append "LDFLAGS", "-L#{nlopt.lib}"
-      ENV.append "LDFLAGS", "-L#{libexec}/lib64"
-      ENV.append "LDFLAGS", "-Wl,-rpath,/#{libexec}/lib64"
-      ENV.append "LIBS", "-lnlopt_cxx"
-
-      # Makefile ignores everything configure tells it so...
-      inreplace "Makefile.in" do |s|
-        s.gsub! "-lnlopt", "-lnlopt_cxx"
-      end
+      ENV.prepend "LDFLAGS", "-L#{libexec}/lib64"
+      ENV.prepend "LDFLAGS", "-Wl,-rpath,/#{libexec}/lib64"
 
       system "./configure"
       system "make"
