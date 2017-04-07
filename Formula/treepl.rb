@@ -1,7 +1,8 @@
 class Treepl < Formula
   desc "dating phylogenies with penalized likelihood"
   homepage "http://blackrim.org/programs/treepl/"
-  url "https://github.com/blackrim/treePL.git", :revision => "3ee6ab1b820c9171eb7c55f3519df3294900e049"
+  url "https://github.com/blackrim/treePL/archive/3ee6ab1b820c9171eb7c55f3519df3294900e049.tar.gz"
+  sha256 "bc19cd534b8618bec63c6239be4377eea635534d8c301f2efa4d2f866adbd3f3"
   version "2016.11.19"
   head "https://github.com/blackrim/treePL.git"
 
