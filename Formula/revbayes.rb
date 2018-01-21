@@ -8,9 +8,8 @@ class Revbayes < Formula
   # tag "bioinformatics"
   # doi "10.1093/sysbio/syw021"
 
-  depends_on "open-mpi" => :recommended
-
   depends_on "cmake" => :build
+  depends_on "open-mpi"
   depends_on "boost"
 
   patch :DATA
