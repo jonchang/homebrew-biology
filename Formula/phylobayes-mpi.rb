@@ -3,7 +3,7 @@ class PhylobayesMpi < Formula
   homepage "http://megasun.bch.umontreal.ca/People/lartillot/www/downloadmpi.html"
   head "https://github.com/bayesiancook/pbmpi.git"
 
-  depends_on :mpi => :cxx
+  depends_on "open-mpi"
 
   conflicts_with "phylobayes"
 

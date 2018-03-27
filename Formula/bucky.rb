@@ -23,6 +23,6 @@ class Bucky < Formula
   end
 
   test do
-    system "bucky", "--version"
+    system "#{bin}/bucky", "--version"
   end
 end

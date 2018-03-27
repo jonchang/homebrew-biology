@@ -7,7 +7,7 @@ class Examl < Formula
   # tag "bioinformatics"
   # doi "10.1093/bioinformatics/btv184"
 
-  depends_on :mpi => :cc
+  depends_on "open-mpi"
 
   def install
     cd "parser" do
@@ -38,6 +38,6 @@ class Examl < Formula
     cp pkgshare/"testData/49.tree", testpath
     system "#{bin}/parse-examl", "-s", "49", "-m", "DNA", "-n", "49"
     system "#{bin}/examl", "-t", "49.tree", "-m", "GAMMA", "-s", "49.binary", "-n", "T1"
-    assert File.exist? "ExaML_result.T1"
+    assert_predicate "ExaML_result.T1", :exist?
   end
 end

@@ -1,7 +1,7 @@
 class Phylocom < Formula
   desc "Phylogenetic community structure and character evolution"
   homepage "http://phylodiversity.net/phylocom/"
-  url "http://phylodiversity.net/phylocom/phylocom-4.2.zip"
+  url "https://github.com/phylocom/phylocom/releases/download/4.2/phylocom-4.2.zip"
   sha256 "f4f111adedfc91f2316b08ec5a994da83888bb1c0acd6076083112a5f51583c7"
   head "https://github.com/phylocom/phylocom.git"
 

@@ -9,7 +9,7 @@ class Roguenarok < Formula
 
   def install
     system "make", "mode=parallel"
-    bin.install %W[RogueNaRok-parallel rnr-lsi rnr-mast rnr-prune rnr-tii]
+    bin.install %w[RogueNaRok-parallel rnr-lsi rnr-mast rnr-prune rnr-tii]
     if build.head?
       pkgshare.install(["example", "utils"])
     end
@@ -27,6 +27,6 @@ class Roguenarok < Formula
   test do
     cp Dir[pkgshare/"example/*"], testpath
     system "#{bin}/RogueNaRok-parallel", "-i", "150.bs", "-t", "150.tre", "-n", "id", "-T", "2"
-    assert File.exist? "RogueNaRok_droppedRogues.id"
+    assert_predicate "RogueNaRok_droppedRogues.id", :exist?
   end
 end

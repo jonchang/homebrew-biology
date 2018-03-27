@@ -1,5 +1,5 @@
 class Phylobayes < Formula
-  desc "phylogenetic reconstruction using infinite mixtures"
+  desc "Phylogenetic reconstruction using infinite mixtures"
   homepage "http://megasun.bch.umontreal.ca/People/lartillot/www/download.html"
   url "http://megasun.bch.umontreal.ca/People/lartillot/www/phylobayes4.1c.tar.gz"
   version "4.1c"
