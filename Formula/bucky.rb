@@ -16,7 +16,7 @@ class Bucky < Formula
   end
 
   def caveats
-    <<-EOS.undent
+    <<~EOS
       The manual, examples, and scripts are installed to:
           #{pkgshare}
     EOS
