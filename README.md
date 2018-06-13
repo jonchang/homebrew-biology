@@ -1,7 +1,7 @@
 Homebrew-biology
 ================
 
-These formulae provide tools for biological research that are too specialized, experimental, or unstable for [Homebrew-science](https://github.com/Homebrew/homebrew-science).
+These formulae provide tools for biological research that are too specialized, experimental, or unstable for [Brewsci/bio](https://github.com/Brewsci/homebrew-bio).
 
 
 How do I install these formulae?
@@ -18,4 +18,4 @@ brew install https://raw.githubusercontent.com/jonchang/homebrew-biology/master/
 
 Documentation
 -------------
-`brew help`, `man brew` or check [Homebrew's documentation](https://github.com/Homebrew/brew/tree/master/share/doc/homebrew#readme).
+`brew help`, `man brew` or check [Homebrew's documentation](https://docs.brew.sh).
