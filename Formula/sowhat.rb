@@ -20,9 +20,9 @@ class Sowhat < Formula
 
   depends_on "cpanminus" => :build
   depends_on "perl" unless OS.mac?
-  depends_on "raxml"
+  depends_on "brewsci/bio/raxml"
+  depends_on "brewsci/bio/seq-gen"
   depends_on RRequirement
-  depends_on "seq-gen"
 
   def install
     ENV.prepend_create_path "PERL5LIB", libexec/"lib/perl5"
