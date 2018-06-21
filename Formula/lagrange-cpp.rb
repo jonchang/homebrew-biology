@@ -5,6 +5,7 @@ class LagrangeCpp < Formula
   version "2018.05.15"
   head "https://github.com/rhr/lagrange-cpp.git"
 
+  depends_on "armadillo"
   depends_on "gcc"
 
   fails_with :clang
