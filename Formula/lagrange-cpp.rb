@@ -7,7 +7,11 @@ class LagrangeCpp < Formula
 
   depends_on "armadillo"
   depends_on "gcc"
+  depends_on "gsl"
+  depends_on "gmp"
+  depends_on "mpfr"
 
+  needs :cxx14
   fails_with :clang
 
   def install
