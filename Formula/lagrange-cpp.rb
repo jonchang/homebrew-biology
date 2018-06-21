@@ -6,7 +6,7 @@ class LagrangeCpp < Formula
   head "https://github.com/rhr/lagrange-cpp.git"
 
   depends_on "armadillo"
-  depends_on "gcc"
+  depends_on "gcc" # for gfortran and openMP
   depends_on "gsl"
   depends_on "nlopt"
 
@@ -14,7 +14,11 @@ class LagrangeCpp < Formula
   fails_with :clang
 
   def install
-    system "make", "-C", "src", "FC=gfortran"
+    inreplace "src/Makefile" do |s|
+      s.remove_make_var! "LINK_LIB_DIRS"
+      s.change_make_var! "FC", "gfortran"
+    end
+    system "make", "-C", "src"
     bin.install "src/lagrange_cpp"
   end
 
