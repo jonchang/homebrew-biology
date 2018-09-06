@@ -5,7 +5,7 @@ class Illumiprocessor < Formula
   url "https://github.com/faircloth-lab/illumiprocessor/archive/v2.0.9.tar.gz"
   sha256 "81a70360e43622d7ec73068d5d0fe79f7c82d7a8c50099b07e703431f220b1fd"
 
-  depends_on "python@2"
+  depends_on "pypy"
   depends_on :java
 
   resource "trimmomatic-0.32" do
@@ -19,7 +19,7 @@ class Illumiprocessor < Formula
     resource("trimmomatic-0.32").stage do
       libexec.install "trimmomatic-0.32.jar"
       libexec.write_jar_script libexec/"trimmomatic-0.32.jar", "trimmomatic"
-      system "chmod", "a+x", libexec/"trimmomatic"
+      chmod 0555, libexec/"trimmomatic"
     end
   end
 
