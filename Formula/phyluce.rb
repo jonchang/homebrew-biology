@@ -6,6 +6,7 @@ class Phyluce < Formula
 
   depends_on "brewsci/bio/muscle"
   depends_on "brewsci/bio/raxml"
+  depends_on "jonchang/biology/illumiprocessor"
   depends_on "mafft"
   depends_on "pypy"
 
@@ -22,11 +23,6 @@ class Phyluce < Formula
   resource "DendroPy" do
     url "https://files.pythonhosted.org/packages/f5/21/17e4fbb1c2a68421eec43930b1e118660c7483229f1b28ba4402e8856884/DendroPy-4.4.0.tar.gz"
     sha256 "f0a0e2ce78b3ed213d6c1791332d57778b7f63d602430c1548a5d822acf2799c"
-  end
-
-  resource "illumiprocessor" do
-    url "https://files.pythonhosted.org/packages/83/9b/3ed16d2a5fff7b51b396e0964a9201750302de7a9cba3bb77b106511cdcf/illumiprocessor-2.0.6.tar.gz"
-    sha256 "64e78c171128befd27644845e58ae83e2bc107900e449f0fbff54cef062e42c4"
   end
 
   resource "numpy" do
@@ -65,16 +61,26 @@ class Phyluce < Formula
   end
 
   def install
+    # Replicate virtualenv_install_with_resources but for pypy
     ENV.prepend_create_path "PYTHONPATH", libexec/"site-packages"
     ENV.prepend_create_path "PYTHONPATH", libexec/"vendor/site-packages"
     resources.each do |r|
       r.stage do
-        system "pypy", *Language::Python.setup_install_args(libexec/"vendor"), "--install-scripts=#{libexec}/vendor/bin"
+        system "pypy", *Language::Python.setup_install_args(libexec/"vendor"),
+          "--install-scripts=#{libexec}/vendor/bin"
       end
     end
-    system "pypy", *Language::Python.setup_install_args(libexec), "--install-scripts=#{libexec}/bin"
+    system "pypy", *Language::Python.setup_install_args(libexec),
+      "--install-scripts=#{libexec}/bin"
     bin.install Dir[libexec/"bin/*"]
     bin.env_script_all_files(libexec/"bin", :PYTHONPATH => ENV["PYTHONPATH"])
+
+    # Correct phyluce's misguided attempts to protect me from Trinity
+    %w[phyluce_assembly_assemblo_trinity
+      phyluce_assembly_get_trinity_coverage_for_uce_loci
+      phyluce_assembly_get_trinity_coverage].each do |script|
+      inreplace libexec/"bin"/script, platform.system() == "Darwin", "False"
+    end
   end
 
   def post_install
