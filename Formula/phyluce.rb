@@ -79,7 +79,7 @@ class Phyluce < Formula
     %w[phyluce_assembly_assemblo_trinity
       phyluce_assembly_get_trinity_coverage_for_uce_loci
       phyluce_assembly_get_trinity_coverage].each do |script|
-      inreplace libexec/"bin"/script, platform.system() == "Darwin", "False"
+      inreplace libexec/"bin"/script, 'platform.system() == "Darwin"', "False"
     end
   end
 
