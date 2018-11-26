@@ -16,7 +16,7 @@ class Sparseassembler < Formula
 
   test do
     testpath.install resource("testdata")
-    raise
-    system "false"
+    args = %w[g 10 k 51 LD 0 GS 200000000 NodeCovTh 1 EdgeCovTh 0 p2 reads1.fastq p2 reads2.fastq]
+    system "#{bin}/SparseAssembler", *args
   end
 end
