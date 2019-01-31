@@ -10,8 +10,7 @@ class LagrangeCpp < Formula
   depends_on "gsl"
   depends_on "nlopt"
 
-  needs :cxx14
-  fails_with :clang
+  fails_with :clang # for openmp
 
   def install
     inreplace "src/Makefile" do |s|
