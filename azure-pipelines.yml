@@ -11,4 +11,26 @@ jobs:
         rm -rf "$HOMEBREW_TAP_DIR"
         ln -s "$PWD" "$HOMEBREW_TAP_DIR"
         brew test-bot
+  displayName: Run brew test-bot
+- job: Linux
+  pool:
+    vmImage: ubuntu-16.04
+  steps:
+    - bash: |
+        set -ex
+        if [[ -n "$SYSTEM_PULLREQUEST_PULLREQUESTNUMBER" ]]; then
+          git fetch origin "master:master" "pull/$SYSTEM_PULLREQUEST_PULLREQUESTNUMBER/head:pr"
+          git checkout pr
+        fi
+        set -u
+        sudo mkdir /home/linuxbrew
+        sudo chown "$USER" /home/linuxbrew
+        git clone https://github.com/Linuxbrew/brew /home/linuxbrew/.linuxbrew/Homebrew
+        mkdir /home/linuxbrew/.linuxbrew/bin
+        ln -s ../Homebrew/bin/brew /home/linuxbrew/.linuxbrew/bin/
+        tap=/home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/"$BUILD_REPOSITORY_ID"
+        mkdir -p $(dirname "$tap")
+        ln -s "$PWD" "$tap"
+        /home/linuxbrew/.linuxbrew/bin/brew install patchelf
+        /home/linuxbrew/.linuxbrew/bin/brew test-bot
       displayName: Run brew test-bot
