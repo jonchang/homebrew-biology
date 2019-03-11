@@ -17,12 +17,6 @@ class PhylobayesMpi < Formula
     pkgshare.install "pb_mpiManual1.7.pdf"
   end
 
-  def caveats; <<~EOS
-    The manual has been installed to:
-      #{opt_pkgshare}
-    EOS
-  end
-
   test do
     system "false"
   end

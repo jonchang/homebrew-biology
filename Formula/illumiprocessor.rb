@@ -32,4 +32,3 @@ class Illumiprocessor < Formula
     false
   end
 end
-
