@@ -7,7 +7,7 @@ class RRequirement < Requirement
     R is required; install it via one of:
       brew install r
       brew cask install r-app
-    EOS
+  EOS
   end
 end
 

@@ -77,8 +77,8 @@ class Phyluce < Formula
 
     # Correct phyluce's misguided attempts to protect me from Trinity
     %w[phyluce_assembly_assemblo_trinity
-      phyluce_assembly_get_trinity_coverage_for_uce_loci
-      phyluce_assembly_get_trinity_coverage].each do |script|
+       phyluce_assembly_get_trinity_coverage_for_uce_loci
+       phyluce_assembly_get_trinity_coverage].each do |script|
       inreplace libexec/"bin"/script, 'platform.system() == "Darwin"', "False"
     end
   end
@@ -90,8 +90,13 @@ class Phyluce < Formula
   end
 
   test do
-    commands = %w[assembly_match_contigs_to_probes assembly_get_match_counts assembly_get_fastas_from_match_counts align_seqcap_align align_get_align_summary_data align_format_nexus_files_for_raxml]
-    commands.each do |cmd|
+    cmds = %w[assembly_match_contigs_to_probes
+              assembly_get_match_counts
+              assembly_get_fastas_from_match_counts
+              align_seqcap_align
+              align_get_align_summary_data
+              align_format_nexus_files_for_raxml]
+    cmds.each do |cmd|
       system "#{bin}/phyluce_#{cmd}", "--help"
     end
   end
