@@ -42,6 +42,7 @@ class Tact < Formula
   end
 
   test do
+    ENV["LANG"] = ENV["LC_ALL"] = "en_US.UTF-8"
     cmds = %w[add_taxa build_taxonomic_tree check_results]
     cmds.each do |cmd|
       system "#{bin}/tact_#{cmd}", "--help"
