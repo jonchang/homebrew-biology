@@ -5,8 +5,8 @@ class Illumiprocessor < Formula
   url "https://github.com/faircloth-lab/illumiprocessor/archive/v2.0.9.tar.gz"
   sha256 "81a70360e43622d7ec73068d5d0fe79f7c82d7a8c50099b07e703431f220b1fd"
 
-  depends_on "pypy"
   depends_on :java
+  depends_on "pypy"
 
   resource "trimmomatic-0.32" do
     url "http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/Trimmomatic-0.32.zip"
