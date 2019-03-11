@@ -6,6 +6,12 @@ class Tact < Formula
   url "https://github.com/jonchang/tact/archive/v0.1.0.tar.gz"
   sha256 "fce8d692d120673d05d4d9a2b9595b6b84bf1bf74dc89a030abdf30df6ef62fe"
 
+  bottle do
+    root_url "https://dl.bintray.com/jonchang/biology-bottles"
+    cellar :any
+    sha256 "19972ca0bff0f0de05b7f9550f7298292a513b31d5a3cdbb95e23ce5ec0e17df" => :mojave
+  end
+
   depends_on "gcc" # for gfortran
   depends_on "openblas"
   depends_on "pypy3"
