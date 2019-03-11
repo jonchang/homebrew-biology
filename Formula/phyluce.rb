@@ -1,4 +1,6 @@
 class Phyluce < Formula
+  include Language::Python::Virtualenv
+
   desc "Pipeline for UCE (and general) phylogenomics"
   homepage "https://phyluce.readthedocs.org/"
   url "https://github.com/faircloth-lab/phyluce/archive/v1.6.7.tar.gz"
@@ -6,12 +8,10 @@ class Phyluce < Formula
 
   depends_on "brewsci/bio/muscle"
   depends_on "brewsci/bio/raxml"
-  depends_on "gcc"
+  depends_on "gcc" # for gfortran
   depends_on "jonchang/biology/illumiprocessor"
   depends_on "mafft"
   depends_on "pypy"
-
-  fails_with :clang # numpy + pypy don't like it
 
   resource "biopython" do
     url "https://files.pythonhosted.org/packages/source/b/biopython/biopython-1.73.tar.gz"
@@ -54,8 +54,8 @@ class Phyluce < Formula
   end
 
   resource "PyVCF" do
-    url "https://files.pythonhosted.org/packages/source/p/PyVCF/PyVCF-0.6.8.tar.gz"
-    sha256 "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    url "https://files.pythonhosted.org/packages/source/P/PyVCF/PyVCF-0.6.8.tar.gz"
+    sha256 "e9d872513d179d229ab61da47a33f42726e9613784d1cb2bac3f8e2642f6f9d9"
   end
 
   resource "six" do
@@ -64,19 +64,8 @@ class Phyluce < Formula
   end
 
   def install
-    # Replicate virtualenv_install_with_resources but for pypy
-    ENV.prepend_create_path "PYTHONPATH", libexec/"site-packages"
-    ENV.prepend_create_path "PYTHONPATH", libexec/"vendor/site-packages"
-    resources.each do |r|
-      r.stage do
-        system "pypy", *Language::Python.setup_install_args(libexec/"vendor"),
-          "--install-scripts=#{libexec}/vendor/bin"
-      end
-    end
-    system "pypy", *Language::Python.setup_install_args(libexec),
-      "--install-scripts=#{libexec}/bin"
-    bin.install Dir[libexec/"bin/*"]
-    bin.env_script_all_files(libexec/"bin", :PYTHONPATH => ENV["PYTHONPATH"])
+    ENV["MACOSX_DEPLOYMENT_TARGET"] = MacOS.version if OS.mac?
+    virtualenv_install_with_resources
 
     # Correct phyluce's misguided attempts to protect me from Trinity
     %w[phyluce_assembly_assemblo_trinity
