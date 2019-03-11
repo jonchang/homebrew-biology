@@ -2,8 +2,8 @@ class Revbayes < Formula
   # cite Hohna_2016: "https://doi.org/10.1093/sysbio/syw021"
   desc "Bayesian phylogenetic inference with graphical models"
   homepage "https://revbayes.github.io/"
-  url "https://github.com/revbayes/revbayes/archive/v1.0.8.tar.gz"
-  sha256 "7029ef28bad036a813c3753ca421f731a2840928b94dfc2b8b817dfc83745c61"
+  url "https://github.com/revbayes/revbayes/archive/v1.0.10.tar.gz"
+  sha256 "95e9affe8ca8d62880cf46778b6ec9dd8726e62a185670ebcbadf2eb2bb79f93"
   head "https://github.com/revbayes/revbayes.git", :branch => "development"
 
   depends_on "cmake" => :build
