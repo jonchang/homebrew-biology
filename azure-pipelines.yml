@@ -10,7 +10,7 @@ jobs:
         mkdir -p "$HOMEBREW_TAP_DIR"
         rm -rf "$HOMEBREW_TAP_DIR"
         ln -s "$PWD" "$HOMEBREW_TAP_DIR"
-        brew test-bot
+        brew test-bot --ci-master
   displayName: Run brew test-bot
 - job: Linux
   pool:
@@ -32,5 +32,5 @@ jobs:
         mkdir -p $(dirname "$tap")
         ln -s "$PWD" "$tap"
         /home/linuxbrew/.linuxbrew/bin/brew install patchelf
-        /home/linuxbrew/.linuxbrew/bin/brew test-bot
+        /home/linuxbrew/.linuxbrew/bin/brew test-bot --ci-master
       displayName: Run brew test-bot
