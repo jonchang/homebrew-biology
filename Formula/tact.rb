@@ -16,6 +16,7 @@ class Tact < Formula
   if OS.mac?
     depends_on "pypy3" => :build
   else
+    # Linux and brewed pypy don't play nice yet
     depends_on "python" => :build
   end
   depends_on "gcc" # for gfortran
@@ -42,8 +43,13 @@ class Tact < Formula
   end
 
   def install
-    ENV["MACOSX_DEPLOYMENT_TARGET"] = MacOS.version if OS.mac?
-    virtualenv_install_with_resources
+    if OS.mac?
+      ENV["MACOSX_DEPLOYMENT_TARGET"] = MacOS.version
+      python = "pypy3"
+    else
+      python = "python3"
+    end
+    virtualenv_install_with_resources(:using => python)
     pkgshare.install "examples"
   end
 
