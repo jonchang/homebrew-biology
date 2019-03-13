@@ -16,7 +16,7 @@ class Tact < Formula
   if OS.mac?
     depends_on "pypy3" => :build
   else
-    depends_on "python" => :build
+    depends_on "python"
     depends_on "numpy" => :build
     depends_on "scipy" => :build
   end
