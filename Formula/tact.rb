@@ -3,8 +3,8 @@ class Tact < Formula
 
   desc "Taxonomic addition for complete phylogenies"
   homepage "https://github.com/jonchang/tact"
-  url "https://github.com/jonchang/tact/archive/v0.1.0.tar.gz"
-  sha256 "fce8d692d120673d05d4d9a2b9595b6b84bf1bf74dc89a030abdf30df6ef62fe"
+  url "https://github.com/jonchang/tact/archive/v0.1.2.tar.gz"
+  sha256 "965fca53027c3f03826ad6237b9de65b9659ee2c0ca930ebbce6d5639f806f91"
 
   bottle do
     root_url "https://dl.bintray.com/jonchang/biology-bottles"
@@ -39,13 +39,14 @@ class Tact < Formula
   def install
     ENV["MACOSX_DEPLOYMENT_TARGET"] = MacOS.version if OS.mac?
     virtualenv_install_with_resources
+    pkgshare.install "examples"
   end
 
   test do
+    cp pkgshare/"examples/*", testpath
     ENV["LANG"] = ENV["LC_ALL"] = "en_US.UTF-8"
-    cmds = %w[add_taxa build_taxonomic_tree check_results]
-    cmds.each do |cmd|
-      system "#{bin}/tact_#{cmd}", "--help"
-    end
+    system "#{bin}/tact_build_taxonomic_tree", "Carangaria.csv", "--output=tax.tre"
+    system "#{bin}/tact_add_taxa", "--backbone=Carangaria.tre", "--taxonomy=tax.tre", "--output=tact"
+    system "#{bin}/tact_check_results", "tact.newick.tre", "--backbone=Carangaria.tre", "--taxonomy=tax.tre"
   end
 end
