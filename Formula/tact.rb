@@ -5,6 +5,7 @@ class Tact < Formula
   homepage "https://github.com/jonchang/tact"
   url "https://github.com/jonchang/tact/archive/v0.1.2.tar.gz"
   sha256 "965fca53027c3f03826ad6237b9de65b9659ee2c0ca930ebbce6d5639f806f91"
+  revision 1
 
   bottle do
     root_url "https://dl.bintray.com/jonchang/biology-bottles"
