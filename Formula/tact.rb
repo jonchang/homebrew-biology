@@ -13,7 +13,11 @@ class Tact < Formula
     sha256 "767307ec07a372e74885af93cef65f356f4d1bf9cf01dbc51c693a3827bcc0a1" => :mojave
   end
 
-  depends_on "pypy3" => :build
+  if OS.mac?
+    depends_on "pypy3" => :build
+  else
+    depends_on "python" => :build
+  end
   depends_on "gcc" # for gfortran
   depends_on "openblas"
 
