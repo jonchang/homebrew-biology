@@ -10,7 +10,7 @@ class Tact < Formula
     root_url "https://dl.bintray.com/jonchang/bottles-biology"
     cellar :any
     rebuild 1
-    sha256 "231786d3512b80af43567bed8cc61dfc09e9a5abe627dc7cfd1057a7633c5335" => :mojave
+    sha256 "767307ec07a372e74885af93cef65f356f4d1bf9cf01dbc51c693a3827bcc0a1" => :mojave
   end
 
   depends_on "pypy3" => :build
