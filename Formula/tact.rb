@@ -16,8 +16,9 @@ class Tact < Formula
   if OS.mac?
     depends_on "pypy3" => :build
   else
-    # Linux and brewed pypy don't play nice yet
     depends_on "python" => :build
+    depends_on "numpy" => :build
+    depends_on "scipy" => :build
   end
   depends_on "gcc" # for gfortran
   depends_on "openblas"
@@ -32,14 +33,16 @@ class Tact < Formula
     sha256 "f0a0e2ce78b3ed213d6c1791332d57778b7f63d602430c1548a5d822acf2799c"
   end
 
-  resource "numpy" do
-    url "https://files.pythonhosted.org/packages/source/n/numpy/numpy-1.16.2.zip"
-    sha256 "6c692e3879dde0b67a9dc78f9bfb6f61c666b4562fd8619632d7043fb5b691b0"
-  end
+  if OS.mac?
+    resource "numpy" do
+      url "https://files.pythonhosted.org/packages/source/n/numpy/numpy-1.16.2.zip"
+      sha256 "6c692e3879dde0b67a9dc78f9bfb6f61c666b4562fd8619632d7043fb5b691b0"
+    end
 
-  resource "scipy" do
-    url "https://files.pythonhosted.org/packages/source/s/scipy/scipy-1.2.1.tar.gz"
-    sha256 "e085d1babcb419bbe58e2e805ac61924dac4ca45a07c9fa081144739e500aa3c"
+    resource "scipy" do
+      url "https://files.pythonhosted.org/packages/source/s/scipy/scipy-1.2.1.tar.gz"
+      sha256 "e085d1babcb419bbe58e2e805ac61924dac4ca45a07c9fa081144739e500aa3c"
+    end
   end
 
   def install
@@ -50,11 +53,18 @@ class Tact < Formula
       python = "python3"
     end
     virtualenv_install_with_resources(:using => python)
+    if OS.linux?
+      %w[numpy scipy].map do |f|
+        site = Language::Python.site_packages(python)
+        pkg = Dir[Formula[f].prefix/site/"*"]
+        cp_r pkg, libexec/site
+      end
+    end
     pkgshare.install "examples"
   end
 
   test do
-    cp pkgshare/"examples/*", testpath
+    cp Dir[pkgshare/"examples/*"], testpath
     ENV["LANG"] = ENV["LC_ALL"] = "en_US.UTF-8"
     system "#{bin}/tact_build_taxonomic_tree", "Carangaria.csv", "--output=tax.tre"
     system "#{bin}/tact_add_taxa", "--backbone=Carangaria.tre", "--taxonomy=tax.tre", "--output=tact"
