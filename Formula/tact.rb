@@ -8,9 +8,10 @@ class Tact < Formula
 
   bottle do
     root_url "https://dl.bintray.com/jonchang/bottles-biology"
-    cellar :any
+    cellar :any if OS.mac?
     rebuild 1
     sha256 "767307ec07a372e74885af93cef65f356f4d1bf9cf01dbc51c693a3827bcc0a1" => :mojave
+    sha256 "d634ffab8efcc2bbf06f1543644f551fd2e5238ae3b5dfc4504fd791da0dc6b0" => :x86_64_linux
   end
 
   if OS.mac?
