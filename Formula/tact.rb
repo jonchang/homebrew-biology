@@ -12,9 +12,9 @@ class Tact < Formula
     sha256 "19972ca0bff0f0de05b7f9550f7298292a513b31d5a3cdbb95e23ce5ec0e17df" => :mojave
   end
 
+  depends_on "pypy3" => :build
   depends_on "gcc" # for gfortran
   depends_on "openblas"
-  depends_on "pypy3"
 
   resource "click" do
     url "https://files.pythonhosted.org/packages/source/c/click/Click-7.0.tar.gz"
