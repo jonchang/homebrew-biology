@@ -7,7 +7,7 @@ class Revbayes < Formula
   head "https://github.com/revbayes/revbayes.git", :branch => "development"
 
   depends_on "cmake" => :build
-  depends_on "boost"
+  depends_on "boost" => :build
   depends_on "open-mpi"
 
   def install
