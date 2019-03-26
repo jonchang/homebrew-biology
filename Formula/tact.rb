@@ -14,7 +14,8 @@ class Tact < Formula
   end
 
   if OS.mac?
-    depends_on "pypy3"
+    depends_on "pypy3" => :build
+    depends_on "libffi"
   else
     depends_on "python@3"
     depends_on "numpy" => :build
@@ -63,6 +64,15 @@ class Tact < Formula
       end
     else
       # Fix up dylibs for macOS
+      dylib = (Formula["pypy3"].libexec)/"lib/libpypy3-c.dylib"
+      mkdir libexec/"lib"
+      cp dylib, libexec/"lib"
+      %w[pypy pypy3].each do |binary|
+        macho = MachO.open("#{libexec}/bin/#{binary}")
+        wanted = macho.linked_dylibs.select { |dylib| dylib.end_with? "libpypy3-c.dylib" }
+        macho.change_dylib(wanted.pop, "#{libexec}/lib/libpypy3-c.dylib")
+        macho.write!
+      end
     end
 
     pkgshare.install "examples"
