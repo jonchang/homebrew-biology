@@ -9,13 +9,12 @@ class Tact < Formula
   bottle do
     root_url "https://dl.bintray.com/jonchang/bottles-biology"
     cellar :any if OS.mac?
-    sha256 "d1670d2fd25abd206cd8beb38bbb807f053790b93c2ce75defa70a35af4b0bc4" => :sierra
+    sha256 "d23c0e8e4d3a1071c5de433f250dfde397cf192f667f71e95587d69e5d2dd95e" => :sierra
     sha256 "d634ffab8efcc2bbf06f1543644f551fd2e5238ae3b5dfc4504fd791da0dc6b0" => :x86_64_linux
   end
 
   if OS.mac?
     depends_on "pypy3" => :build
-    depends_on "libffi"
   else
     depends_on "python@3"
     depends_on "numpy" => :build
