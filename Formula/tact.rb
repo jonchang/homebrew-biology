@@ -14,7 +14,7 @@ class Tact < Formula
   end
 
   if OS.mac?
-    depends_on "pypy3" => :build
+    depends_on "pypy3"
   else
     depends_on "python@3"
     depends_on "numpy" => :build
@@ -52,14 +52,19 @@ class Tact < Formula
     else
       python = "python3"
     end
+
     virtualenv_install_with_resources(:using => python)
+
     if OS.linux?
       %w[numpy scipy].map do |f|
         site = Language::Python.site_packages(python)
         pkg = Dir[Formula[f].prefix/site/"*"]
         cp_r pkg, libexec/site
       end
+    else
+      # Fix up dylibs for macOS
     end
+
     pkgshare.install "examples"
   end
 
