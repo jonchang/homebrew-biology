@@ -13,7 +13,7 @@ class Scythe < Formula
     pkgshare.install "testing"
   end
 
-  def caveats; <<-EOS.undent
+  def caveats; <<~EOS
   The example data have been installed to:
     #{pkgshare}
   EOS

@@ -13,7 +13,7 @@ class Phylocom < Formula
     pkgshare.install "example_data", "phylocom_manual.pdf"
   end
 
-  def caveats; <<-EOS.undent
+  def caveats; <<~EOS
   The manual and example data have been installed to:
     #{pkgshare}
   EOS
