@@ -7,6 +7,14 @@ class Tact < Formula
   sha256 "965fca53027c3f03826ad6237b9de65b9659ee2c0ca930ebbce6d5639f806f91"
   revision 1
 
+  bottle do
+    root_url "https://dl.bintray.com/jonchang/bottles-biology"
+    cellar :any
+    sha256 "e14e045eddf67d799326380d2f6f22b4baf39902f4650c7bd77940ad64b03f75" => :mojave
+    sha256 "56252606c633dfe4d6ffea7aeeb5f7683cfadcdb08cbb525500aeb779e78bbf6" => :sierra
+    sha256 "490cb9d3783f2a8f5dc08fc58396059f8e481b01ef4e31700699b80d405bf1b8" => :x86_64_linux
+  end
+
   if OS.mac?
     depends_on "pypy3" => :build
   else
