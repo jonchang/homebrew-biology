@@ -4,10 +4,10 @@ on: [push, pull_request]
 
 jobs:
   ci:
-    runs-on: macOS-10.14
+    name: Run brew test-bot on macOS
+    runs-on: macOS-latest
     steps:
-      - uses: actions/checkout@master
-        name: Run brew test-bot
+      - uses: actions/checkout@v1
         run: |
           set -e
           brew update
