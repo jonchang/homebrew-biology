@@ -1,12 +1,12 @@
 class Tact < Formula
   desc "Taxonomic addition for complete phylogenies"
   homepage "https://github.com/jonchang/tact"
-  url "https://github.com/jonchang/tact/archive/v0.1.4.tar.gz"
-  sha256 "96364af941c7cb42bdd827b8ce9ce5a4f511a7bffb612ad085e4ed3849128d7d"
+  url "https://github.com/jonchang/tact/archive/v0.2.0.tar.gz"
+  sha256 "2e595985cfafb23ba139f3f06c729b9240b05accbb38d6e146847189ab12cdd7"
 
   depends_on "pipx" => :build
-  depends_on "python"
   depends_on "gcc" # for gfortran
+  depends_on "python"
 
   def install
     xy = Language::Python.major_minor_version "python3"
