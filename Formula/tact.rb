@@ -9,15 +9,9 @@ class Tact < Formula
   depends_on "python"
 
   def install
-    xy = Language::Python.major_minor_version "python3"
-    # Because click is part of pipx we don't want to contaminate our
-    # install with the version from Homebrew
-    px = Formula["pipx"]
-    click = Dir["#{px.libexec}/lib/python*/site-packages/click"].pop
     ENV["PIPX_HOME"] = libexec
     ENV["PIPX_BIN_DIR"] = bin
-    system "pipx", "install", "--verbose", "--spec=.", "tact"
-    cp_r click, libexec/"venvs/tact/lib/python#{xy}/site-packages"
+    system "pipx", "install", "--verbose", "--spec=.", "--pip-args=--ignore-installed", "tact"
     pkgshare.install "examples"
   end
 
