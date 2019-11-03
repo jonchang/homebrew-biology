@@ -6,6 +6,13 @@ class Eems < Formula
   revision 1
   head stable.url
 
+  bottle do
+    root_url "https://dl.bintray.com/jonchang/bottles-biology"
+    cellar :any
+    sha256 "0d8a07835f344be8fadd50a362da951b2169a4f66c1f946eb704f57cd4844345" => :mojave
+    sha256 "12ec01035dd4414e26a510559e0521452b09f6d6972384de2c324e5c5da18841" => :x86_64_linux
+  end
+
   depends_on "boost"
   depends_on "eigen"
 
