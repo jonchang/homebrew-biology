@@ -3,6 +3,13 @@ class Eems < Formula
   homepage "https://github.com/dipetkov/eems"
   url "https://github.com/dipetkov/eems.git", :revision => "42bc6c7379295b91f38eedf0a3723e1bf3cf4264"
   version "2018.09.17"
+  bottle do
+    root_url "https://dl.bintray.com/jonchang/bottles-biology"
+    cellar :any
+    sha256 "0d8a07835f344be8fadd50a362da951b2169a4f66c1f946eb704f57cd4844345" => :mojave
+    sha256 "12ec01035dd4414e26a510559e0521452b09f6d6972384de2c324e5c5da18841" => :x86_64_linux
+  end
+
   head stable.url
 
   depends_on "boost"
