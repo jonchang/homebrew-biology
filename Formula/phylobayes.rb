@@ -4,6 +4,7 @@ class Phylobayes < Formula
   url "http://megasun.bch.umontreal.ca/People/lartillot/www/phylobayes4.1c.tar.gz"
   version "4.1c"
   sha256 "3ab7e853d720537aeeae5c50605abb8559e24221dbc36d97aa02a31753ace943"
+  revision 1
   # tag "bioinformatics"
   # doi "10.1093/bioinformatics/btp368"
 
