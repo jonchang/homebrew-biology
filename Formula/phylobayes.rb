@@ -12,13 +12,14 @@ class Phylobayes < Formula
   patch :DATA
 
   def install
+    pkgshare.install Dir["data/*"]
     system "make", "-C", "sources"
-    libexec.install Dir["data/*"]
-    bin.install_symlink Dir["#{libexec}/*"] - Dir["#{libexec}/{brpo,moc}"]
+    bin.install Dir["data/*"]
   end
 
   test do
-    system "false"
+    cp Dir[pkgshare/"brpo/*"], testpath
+    system "#{bin}/pb", "-t", "brpo.tree", "-d", "brpo.ali", "-x", "1", "10", "test"
   end
 end
 
