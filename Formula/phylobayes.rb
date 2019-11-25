@@ -9,8 +9,8 @@ class Phylobayes < Formula
   bottle do
     root_url "https://dl.bintray.com/jonchang/bottles-biology"
     cellar :any_skip_relocation
-    sha256 "cc27449cfaa3daff36be843df8c58e94ce962026c6c5eb48b815ea6e70b51c79" => :catalina
-    sha256 "ed13d98e3035effe097fd9a34eb188f7dff2ba1d36c84953fe03c6273527688c" => :x86_64_linux
+    sha256 "00090e9eaaa15b0c9550e2cf07eecfff768bfac168c96454c55aa1f0854b99c1" => :catalina
+    sha256 "5d169434d26e6cf4569bddefe6fddb35086850b3b68f74f96ff766fb250366ed" => :x86_64_linux
   end
 
   conflicts_with "phylobayes-mpi"
