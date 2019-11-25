@@ -2,8 +2,9 @@ class Phylobayes < Formula
   # cite Lartillot_2009: "https://doi.org/10.1093/bioinformatics/btp368"
   desc "Phylogenetic reconstruction using infinite mixtures"
   homepage "http://megasun.bch.umontreal.ca/People/lartillot/www/download.html"
-  url "https://github.com/bayesiancook/phylobayes.git", :revision => "2d3a62c04b86eda28149a94a187580d59ecbff8d"
-  version "4.1d"
+  url "https://github.com/bayesiancook/phylobayes/archive/v4.1e.tar.gz"
+  version "4.1e"
+  sha256 "ab88c65844db76f3229a088825153b04c1ce59f129805ddb75a7728920b31304"
 
   bottle do
     root_url "https://dl.bintray.com/jonchang/bottles-biology"
