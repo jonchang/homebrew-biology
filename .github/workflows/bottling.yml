@@ -29,7 +29,7 @@ jobs:
         run: |
           mkdir /tmp/bottles
           cd /tmp/bottles
-          brew test-bot --root-url=$HOMEBREW_BINTRAY_URL
+          brew test-bot --root-url=$HOMEBREW_BINTRAY_URL || true
           mv /tmp/bottles $GITHUB_WORKSPACE
       - name: Cache bottles
         uses: actions/upload-artifact@v1
