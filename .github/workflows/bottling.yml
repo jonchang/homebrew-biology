@@ -88,7 +88,7 @@ jobs:
           path: ./
       - name: Create package
         env:
-          HOMEBREW_BINTRAY_REPO: bottles-tap
+          HOMEBREW_BINTRAY_REPO: bottles-biology
           HOMEBREW_BINTRAY_USER: ${{github.event.repository.owner.login}}
           HOMEBREW_BINTRAY_KEY: ${{secrets.HOMEBREW_BINTRAY_KEY}}
         run: |
