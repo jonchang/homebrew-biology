@@ -1,8 +1,8 @@
 class Tact < Formula
   desc "Taxonomic addition for complete phylogenies"
   homepage "https://github.com/jonchang/tact"
-  url "https://github.com/jonchang/tact/archive/v0.2.0.tar.gz"
-  sha256 "2e595985cfafb23ba139f3f06c729b9240b05accbb38d6e146847189ab12cdd7"
+  url "https://github.com/jonchang/tact/archive/v0.2.1.tar.gz"
+  sha256 "03c3cabb3e8889d81f1a3dbc50f3f4507a4399f0142dce00ddcfc13a8219dc72"
 
   depends_on "pipx" => :build
   depends_on "gcc" # for gfortran
