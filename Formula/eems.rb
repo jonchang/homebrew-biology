@@ -117,7 +117,7 @@ index 2c2175f..5d31b31 100644
  # Checks for libraries.
  LT_INIT
 
--# Python
+-# Python 
 -AM_PATH_PYTHON([2.7])
 -AC_ARG_VAR([PYTHON_INCLUDE], [Include flags for python, bypassing python-config])
 -AC_ARG_VAR([PYTHON_CONFIG], [Path to python-config])
