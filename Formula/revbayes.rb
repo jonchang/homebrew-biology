@@ -2,31 +2,28 @@ class Revbayes < Formula
   # cite Hohna_2016: "https://doi.org/10.1093/sysbio/syw021"
   desc "Bayesian phylogenetic inference with graphical models"
   homepage "https://revbayes.github.io/"
-  url "https://github.com/revbayes/revbayes/archive/v1.0.10.tar.gz"
-  sha256 "95e9affe8ca8d62880cf46778b6ec9dd8726e62a185670ebcbadf2eb2bb79f93"
+  url "https://github.com/revbayes/revbayes.archive/archive/v1.0.13.tar.gz"
+  sha256 "e85e2e1fe182fe9f504900150d936a06d252a362c591b9d3d8272dd085aa85d9"
   head "https://github.com/revbayes/revbayes.git", :branch => "development"
 
-  depends_on "cmake" => :build
-  depends_on "boost" => :build
+  depends_on "meson" => :build
+  depends_on "ninja" => :build
+  depends_on "boost"
   depends_on "open-mpi"
 
   def install
-    cd "projects/cmake" do
-      inreplace "regenerate.sh", /^SET.*BOOST_ROOT.*$/, ""
-      mkdir "build"
-      system "./regenerate.sh", "-boost", "false"
-      cd "build" do
-        system "cmake", ".", *std_cmake_args
-        system "make"
-      end
-      bin.install "rb"
+    cd "projects/meson" do
+      system "./generate.sh"
+    end
+    mkdir "build" do
+      ENV["BOOST_ROOT"] = Formula["boost"].prefix
+      system "meson", "--prefix=#{prefix}", "-Dmpi=true", ".."
+      system "ninja", "-v"
+      system "ninja", "-v", "install"
     end
   end
 
   test do
-    cp pkgshare/"examples/HKY.Rev", testpath
-    cp pkgshare/"tests/data/Primates.nex", testpath
-    mv "Primates.nex", "primates_cytb.nex"
-    system "#{bin}/rb", "HKY.Rev"
+    system "#{bin}/rb", "--version"
   end
 end
