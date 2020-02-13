@@ -1,0 +1,69 @@
+name: Build bottles.
+
+on:
+  pull_request:
+    paths:
+      - 'Formula/*'
+
+jobs:
+  build-linux:
+    name: Build Linux bottle
+    runs-on: ubuntu-latest
+    container:
+      image: homebrew/brew
+    steps:
+      - name: Checkout tap
+        uses: actions/checkout@v2
+      - name: Setup tap
+        run: |
+          mkdir -p "$(dirname $(brew --repo ${{github.repository}}))"
+          cp -a "$GITHUB_WORKSPACE" "$(brew --repo ${{github.repository}})"
+      - name: Build bottles
+        env:
+          HOMEBREW_BINTRAY_URL: https://dl.bintray.com/${{github.event.repository.owner.login}}/bottles-biology
+        run: |
+          mkdir ~/bottles
+          cd ~/bottles
+          brew test-bot --root-url=$HOMEBREW_BINTRAY_URL --tap=jonchang/biology
+      - name: Copy bottles
+        if: always()
+        run: |
+          cp -a ~/bottles $RUNNER_TEMP/
+      - name: Upload bottles
+        if: always()
+        uses: actions/upload-artifact@v1
+        with:
+          name: bottles
+          path: ${{runner.temp}}/bottles
+  build-macos:
+    name: Build macOS bottle
+    runs-on: macos-latest
+    steps:
+      - name: Checkout tap
+        uses: actions/checkout@v2
+      - name: Update Homebrew
+        run: |
+          rm -rf $(brew --repo homebrew/cask)
+          rm -rf $(brew --repo homebrew/cask-versions)
+          brew update-reset
+      - name: Setup tap
+        run: |
+          mkdir -p "$(dirname $(brew --repo ${{github.repository}}))"
+          cp -a "$GITHUB_WORKSPACE" "$(brew --repo ${{github.repository}})"
+      - name: Build bottles
+        env:
+          HOMEBREW_BINTRAY_URL: https://dl.bintray.com/${{github.event.repository.owner.login}}/bottles-biology
+        run: |
+          mkdir ~/bottles
+          cd ~/bottles
+          brew test-bot --root-url=$HOMEBREW_BINTRAY_URL --tap=jonchang/biology
+      - name: Copy bottles
+        if: always()
+        run: |
+          cp -a ~/bottles $RUNNER_TEMP/
+      - name: Upload bottles
+        if: always()
+        uses: actions/upload-artifact@v1
+        with:
+          name: bottles
+          path: ${{runner.temp}}/bottles

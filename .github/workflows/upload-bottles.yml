@@ -1,0 +1,184 @@
+name: Upload bottles.
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'Formula/*'
+
+jobs:
+  upload-bottles:
+    runs-on: ubuntu-latest
+    container:
+      image: homebrew/brew
+    steps:
+      - name: Get artifact data
+        uses: actions/github-script@0.4.0
+        id: artifact
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          result-encoding: string
+          script: |
+            const prs = await github.repos.listPullRequestsAssociatedWithCommit({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              commit_sha: context.payload.head_commit.id
+            })
+            console.log(prs.data.length + " prs")
+            if (prs.data.length === 0) {
+              console.log("No pull requests are associated with this merge commit.")
+              return 0
+            }
+            const pr = prs.data[0]
+            console.log("first pr head ref=" + pr.head.ref)
+
+            // register needed endpoints since the github action is too old
+            github.registerEndpoints({
+              actions: {
+                listWorkflowRuns: {
+                  method: "GET",
+                  url: "/repos/:owner/:repo/actions/workflows/:workflow_id/runs",
+                  headers: {
+                    accept: "application/vnd.github.groot-preview+json"
+                  },
+                  params: {
+                    owner: {
+                      required: true,
+                      type: "string"
+                    },
+                    repo: {
+                      required: true,
+                      type: "string"
+                    },
+                    workflow_id: {
+                      required: true,
+                      type: "string",
+                    },
+                    branch: {
+                      type: "string",
+                    }
+                  }
+                },
+                listWorkflowRunArtifacts: {
+                  method: "GET",
+                  url: "/repos/:owner/:repo/actions/runs/:run_id/artifacts",
+                  headers: {
+                    accept: "application/vnd.github.groot-preview+json"
+                  },
+                  params: {
+                    owner: {
+                      required: true,
+                      type: "string"
+                    },
+                    repo: {
+                      required: true,
+                      type: "string"
+                    },
+                    run_id: {
+                      required: true,
+                      type: "integer",
+                    }
+                  }
+                }
+              }
+            });
+
+            const runs = await github.actions.listWorkflowRuns({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: "build-bottles.yml",
+              branch: pr.head.ref
+              })
+            console.log(runs.data.total_count + " runs")
+            if (runs.data.total_count === 0) {
+              console.log("No workflow runs are associated with this pull request.")
+              return 0
+            }
+
+            const artifacts = await github.actions.listWorkflowRunArtifacts({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              run_id: runs.data.workflow_runs[0].id
+              })
+            console.log(artifacts.data.total_count + " artifacts")
+            if (artifacts.data.total_count === 0) {
+              console.log("No artifacts were uploaded for this workflow run.")
+              return 0
+            }
+            result = []
+            for (let obj of artifacts.data.artifacts) {
+              console.log('Artifact ' + obj.name + ' <' + obj.archive_download_url + '>')
+              result.push(obj.id)
+            }
+            return result.join(' ')
+      - name: Test artifact count
+        run: |
+          artifact_ids=${{steps.artifact.outputs.result}}
+          echo "artifact_ids=$artifact_ids"
+          if [ "$artifact_ids" -eq "0" ]; then
+            echo "false";
+            exit 1;
+          fi
+      - name: Install unzip
+        env:
+          HOMEBREW_NO_ANALYTICS: 1
+        run: |
+          brew install unzip
+      - name: Download bottles
+        run: |
+          set -eu
+          mkdir ~/bottles
+          cd ~/bottles
+          artifact_ids=${{steps.artifact.outputs.result}}
+          echo "artifact_ids=$artifact_ids"
+          for artifact_id in $artifact_ids
+          do
+            curl -L -o bottles.zip "https://${{secrets.HOMEBREW_GITHUB_API_TOKEN}}@api.github.com/repos/${{github.repository}}/actions/artifacts/$artifact_id/zip"
+            file bottles.zip
+            unzip bottles.zip
+            rm bottles.zip
+          done
+      - name: Create package
+        env:
+          HOMEBREW_BINTRAY_REPO: bottles-biology
+          HOMEBREW_BINTRAY_USER: ${{github.event.repository.owner.login}}
+          HOMEBREW_BINTRAY_KEY: ${{secrets.HOMEBREW_BINTRAY_KEY}}
+        run: |
+          for package in $(ls -1 *.bottle.* | awk -F '--' '{print $1}' | uniq | tr '@' ':'); do
+            curl \
+              --user $HOMEBREW_BINTRAY_USER:$HOMEBREW_BINTRAY_KEY \
+              --header "Content-Type: application/json" \
+              --data " \
+                {\"name\": \"$package\", \
+                \"vcs_url\": \"$GITHUB_REPOSITORY\", \
+                \"licenses\": [\"MIT\"], \
+                \"public_download_numbers\": true, \
+                \"public_stats\": true \
+                }" \
+              https://api.bintray.com/packages/$HOMEBREW_BINTRAY_USER/$HOMEBREW_BINTRAY_REPO || true
+          done
+      - name: Upload bottles
+        env:
+          HOMEBREW_BOTTLE_DOMAIN: https://dl.bintray.com/${{github.event.repository.owner.login}}
+          HOMEBREW_BINTRAY_USER:  ${{github.event.repository.owner.login}}
+          HOMEBREW_BINTRAY_KEY: ${{secrets.HOMEBREW_BINTRAY_KEY}}
+          HOMEBREW_BINTRAY_URL: https://dl.bintray.com/${{github.event.repository.owner.login}}/bottles-biology
+        run: brew test-bot --root-url=$HOMEBREW_BINTRAY_URL --bintray-org=$HOMEBREW_BINTRAY_USER --ci-upload --publish
+      - name: Push bottle commit
+        env:
+          GIT_COMMITTER_NAME: ${{github.event.pusher.name}}
+          GIT_COMMITTER_EMAIL: ${{github.event.pusher.email}}
+        run: |
+          cd $(brew --repo ${{github.repository}})
+          git commit --amend --no-edit
+          git show --pretty=fuller
+          for try in $(seq 5); do
+            git fetch
+            git rebase origin/master
+            if git push https://x-access-token:${{secrets.GITHUB_TOKEN}}@github.com/${{github.repository}} master; then
+              break
+            else
+              sleep 3s
+            fi
+          done
