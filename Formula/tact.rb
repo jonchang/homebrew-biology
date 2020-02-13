@@ -3,6 +3,7 @@ class Tact < Formula
   homepage "https://github.com/jonchang/tact"
   url "https://github.com/jonchang/tact/archive/v0.2.1.tar.gz"
   sha256 "03c3cabb3e8889d81f1a3dbc50f3f4507a4399f0142dce00ddcfc13a8219dc72"
+  revision 1
 
   bottle do
     root_url "https://dl.bintray.com/jonchang/bottles-biology"
@@ -18,7 +19,7 @@ class Tact < Formula
   def install
     ENV["PIPX_HOME"] = libexec
     ENV["PIPX_BIN_DIR"] = bin
-    system "pipx", "install", "--verbose", "--spec=.", "--pip-args=--ignore-installed", "tact"
+    system "pipx", "install", "--verbose", "--pip-args=--ignore-installed", "tact"
     pkgshare.install "examples"
   end
 
