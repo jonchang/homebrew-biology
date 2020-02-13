@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - master
-    paths:
-      - 'Formula/*'
 
 jobs:
   upload-bottles:
@@ -23,7 +21,7 @@ jobs:
             const prs = await github.repos.listPullRequestsAssociatedWithCommit({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              commit_sha: context.payload.head_commit.id
+              commit_sha: 6cb927b3b3848dcb903fabde54d9edec73f0b6af
             })
             console.log(prs.data.length + " prs")
             if (prs.data.length === 0) {
@@ -164,7 +162,9 @@ jobs:
           HOMEBREW_BINTRAY_USER:  ${{github.event.repository.owner.login}}
           HOMEBREW_BINTRAY_KEY: ${{secrets.HOMEBREW_BINTRAY_KEY}}
           HOMEBREW_BINTRAY_URL: https://dl.bintray.com/${{github.event.repository.owner.login}}/bottles-biology
-        run: brew test-bot --root-url=$HOMEBREW_BINTRAY_URL --bintray-org=$HOMEBREW_BINTRAY_USER --ci-upload --publish
+        run: |
+          cd ~/bottles
+          brew test-bot --root-url=$HOMEBREW_BINTRAY_URL --bintray-org=$HOMEBREW_BINTRAY_USER --ci-upload --publish
       - name: Push bottle commit
         env:
           GIT_COMMITTER_NAME: ${{github.event.pusher.name}}
