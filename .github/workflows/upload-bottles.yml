@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - master
+    paths:
+      - 'Formula/*'
 
 jobs:
   upload-bottles:
@@ -21,7 +23,7 @@ jobs:
             const prs = await github.repos.listPullRequestsAssociatedWithCommit({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              commit_sha: "6cb927b3b3848dcb903fabde54d9edec73f0b6af"
+              commit_sha: context.payload.head_commit.id
             })
             console.log(prs.data.length + " prs")
             if (prs.data.length === 0) {
