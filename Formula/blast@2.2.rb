@@ -4,6 +4,7 @@ class BlastAT22 < Formula
   url "https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.2.31/ncbi-blast-2.2.31+-src.tar.gz"
   version "2.2.31"
   sha256 "f0960e8af2a6021fde6f2513381493641f687453a804239a7e598649b432f8a5"
+  revision 1
 
   keg_only :versioned_formula
 
@@ -14,12 +15,10 @@ class BlastAT22 < Formula
   depends_on "lzo"
   depends_on "pcre"
 
-  # Fix configure: error: Do not know how to build MT-safe with compiler g++-5 5.1.0
-  fails_with :gcc => "5"
-
   # Build failure reported to toolbox@ncbi.nlm.nih.gov on 11 May 2015,
   # patch provided by developers; should be included in next release
-  patch :p0, :DATA
+  # Fix configure: error: Do not know how to build MT-safe with compiler g++-5 5.1.0
+  patch :DATA
 
   def install
     # Fix error:
@@ -30,7 +29,7 @@ class BlastAT22 < Formula
     # Move libraries to libexec. Libraries and headers conflict with ncbi-c++-toolkit.
     args = %W[--prefix=#{prefix} --libdir=#{libexec} --without-debug --with-mt]
 
-    args << "--with-mysql"
+    args << "--without-mysql"
     args << "--with-freetype=#{Formula["freetype"].opt_prefix}"
     args << "--with-jpeg=#{Formula["jpeg"].opt_prefix}"
     args << "--with-png=#{Formula["libpng"].opt_prefix}"
@@ -62,18 +61,15 @@ class BlastAT22 < Formula
 end
 
 __END__
---- c++/include/corelib/ncbimtx.inl (revision 467211)
-+++ c++/include/corelib/ncbimtx.inl (working copy)
-@@ -388,7 +388,17 @@
+diff --git a/c++/include/corelib/ncbimtx.inl b/c++/include/corelib/ncbimtx.inl
+index b787612..97ace20 100644
+--- a/c++/include/corelib/ncbimtx.inl
++++ b/c++/include/corelib/ncbimtx.inl
+@@ -388,7 +388,12 @@ void CRWLockHolder::RemoveListener(IRWLockHolder_Listener* listener)
      _ASSERT(m_Lock);
-
+ 
      m_ObjLock.Lock();
 -    m_Listeners.remove(TRWLockHolder_ListenerWeakRef(listener));
-+    // m_Listeners.remove(TRWLockHolder_ListenerWeakRef(listener));
-+    // The above gives strange errors about invalid operands to operator==
-+    // with the Apple Developer Tools release containing Xcode 6.3.1 and
-+    // "Apple LLVM version 6.1.0 (clang-602.0.49) (based on LLVM 3.6.0svn)".
-+    // The below workaround should be equivalent.
 +    TRWLockHolder_ListenerWeakRef ref(listener);
 +    TListenersList::iterator it;
 +    while ((it = find(m_Listeners.begin(), m_Listeners.end(), ref))
@@ -82,4 +78,27 @@ __END__
 +    }
      m_ObjLock.Unlock();
  }
-
+ 
+diff --git a/c++/src/build-system/configure b/c++/src/build-system/configure
+index 95c4dce..c05ccf1 100755
+--- a/c++/src/build-system/configure
++++ b/c++/src/build-system/configure
+@@ -5819,14 +5819,10 @@ ncbi_compiler_ver="0"
+ 
+ if test "$GCC" = "yes" ; then
+    compiler_ver="`$real_CXX -dumpversion 2>&1`"
+-   case "$compiler_ver" in
+-     2.95* | 2.96* | 3.* | 4.* )
+-       compiler="GCC"
+-       ncbi_compiler="GCC"
+-       ncbi_compiler_ver="$compiler_ver"
+-                 WithFeatures="$WithFeatures${WithFeaturesSep}GCC"; WithFeaturesSep=" "
+-       ;;
+-   esac
++   compiler="GCC"
++   ncbi_compiler="GCC"
++   ncbi_compiler_ver="$compiler_ver"
++             WithFeatures="$WithFeatures${WithFeaturesSep}GCC"; WithFeaturesSep=" "
+ elif test "$KCC" = "yes" ; then
+    compiler_ver="$kcc_ver"
+    compiler="KCC"
