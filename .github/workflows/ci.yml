@@ -3,6 +3,7 @@ name: CI
 on:
   push:
     branch: master
+  pull_request: []
 
 jobs:
   ci:
@@ -18,4 +19,4 @@ jobs:
           mkdir -p "$HOMEBREW_TAP_DIR"
           rm -rf "$HOMEBREW_TAP_DIR"
           ln -s "$PWD" "$HOMEBREW_TAP_DIR"
-          brew test-bot --tap="jonchang/biology" --root-url=https://dl.bintray.com/jonchang/bottles-biology
+          brew test-bot
