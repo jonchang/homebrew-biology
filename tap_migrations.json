@@ -1,4 +1,5 @@
 {
+    "blast@2.2": "brewsci/bio",
     "phylobayes": "brewsci/bio",
     "treepl": "brewsci/bio"
 }
