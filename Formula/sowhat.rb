@@ -3,11 +3,12 @@ class RRequirement < Requirement
 
   satisfy(:build_env => false) { which("R") }
 
-  def message; <<~EOS
-    R is required; install it via one of:
-      brew install r
-      brew cask install r-app
-  EOS
+  def message
+    <<~EOS
+      R is required; install it via one of:
+        brew install r
+        brew cask install r
+    EOS
   end
 end
 
@@ -39,6 +40,7 @@ class Sowhat < Formula
   end
 
   test do
-    system "#{bin}/sowhat", "--constraint=#{pkgshare}/examples/H0.tre", "--aln=#{pkgshare}/examples/nt.phy", "--dir=t", "--name=t"
+    examples = pkgshare/"examples"
+    system "#{bin}/sowhat", "--constraint=#{examples}/H0.tre", "--aln=#{examples}/nt.phy", "--dir=t", "--name=t"
   end
 end
