@@ -13,12 +13,6 @@ class Scythe < Formula
     pkgshare.install "testing"
   end
 
-  def caveats; <<~EOS
-  The example data have been installed to:
-    #{pkgshare}
-  EOS
-  end
-
   test do
     cp pkgshare/"testing/btrim_adapters.fa", testpath
     cp pkgshare/"testing/reads.fastq", testpath
