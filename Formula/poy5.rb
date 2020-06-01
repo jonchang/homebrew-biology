@@ -14,8 +14,8 @@ class Poy5 < Formula
   depends_on "camlp4" => :build
   depends_on "ocaml" => :build
   depends_on "ocamlbuild" => :build
-  uses_from_macos "openblas"
-  uses_from_macos "readline"
+  depends_on "openblas" if OS.linux?
+  depends_on "readline" if OS.linux?
   uses_from_macos "zlib"
 
   def install
