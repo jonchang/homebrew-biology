@@ -10,9 +10,7 @@ class Roguenarok < Formula
   def install
     system "make", "mode=parallel"
     bin.install %w[RogueNaRok-parallel rnr-lsi rnr-mast rnr-prune rnr-tii]
-    if build.head?
-      pkgshare.install(["example", "utils"])
-    end
+    pkgshare.install(["example", "utils"]) if build.head?
   end
 
   def caveats
