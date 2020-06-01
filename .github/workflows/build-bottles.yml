@@ -10,7 +10,7 @@ jobs:
     name: Build Linux bottle
     runs-on: ubuntu-latest
     container:
-      image: homebrew/brew
+      image: homebrew/ubuntu16.04:master
     steps:
       - name: Checkout tap
         uses: actions/checkout@v2
