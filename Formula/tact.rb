@@ -7,10 +7,9 @@ class Tact < Formula
 
   bottle do
     root_url "https://dl.bintray.com/jonchang/bottles-biology"
-    cellar :any_skip_relocation
-    rebuild 1
-    sha256 "1a1e256f406b9b385e95f9b30e2bc82f48b096c0c7e8bbc451f9bba2fc5b1f9a" => :catalina
-    sha256 "0d2d2483b704fffd26159b86a791b135d38ed7dac0bd54e7de137ce730ee1da8" => :x86_64_linux
+    cellar :any
+    sha256 "155a7ac383bc422baf42108f37cdba5a11e597d1c2e06fc8ab6a18cfb77a4259" => :catalina
+    sha256 "f64a7364df9635fa0173827dac057b4e6ce92ab12e4c5194812d320205c349eb" => :x86_64_linux
   end
 
   depends_on "pipx" => :build
