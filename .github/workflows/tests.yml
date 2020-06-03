@@ -35,8 +35,10 @@ jobs:
         uses: actions/checkout@v2
       - name: Set up tap
         run: |
-          rm -rf $(brew --repository ${{github.repository}})
-          ln -s $GITHUB_WORKSPACE $(brew --repository ${{github.repository}})
+          REPO=$(brew --repo ${{github.repository}})
+          mkdir -p "$REPO"
+          rm -rf "$REPO"
+          ln -s $GITHUB_WORKSPACE "$REPO"
       - name: Run brew test-bot --only-setup
         run: brew test-bot --only-setup --tap=${{github.repository}}
       - name: Run brew test-bot --only-formulae
@@ -82,11 +84,15 @@ jobs:
           rm -rf $(brew --repo homebrew/cask)
           rm -rf $(brew --repo homebrew/cask-versions)
           brew update-reset
+          brew rm $(brew ls)
+          brew cleanup
           brew cask install xquartz
       - name: Set up tap
         run: |
-          rm -rf $(brew --repository ${{github.repository}})
-          ln -s $GITHUB_WORKSPACE $(brew --repository ${{github.repository}})
+          REPO=$(brew --repo ${{github.repository}})
+          mkdir -p "$REPO"
+          rm -rf "$REPO"
+          ln -s $GITHUB_WORKSPACE "$REPO"
       - name: Run brew test-bot --only-setup
         run: brew test-bot --only-setup --tap=${{github.repository}}
       - name: Run brew test-bot --only-formulae
