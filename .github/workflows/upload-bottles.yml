@@ -33,7 +33,7 @@ jobs:
         uses: Homebrew/actions/download-artifact@master
         with:
           github_token: ${{secrets.GITHUB_TOKEN}}
-          workflow: build-bottles.yml
+          workflow: tests.yml
           commit: ${{steps.pr.outputs.head_sha}}
           name: bottles
           path: bottles

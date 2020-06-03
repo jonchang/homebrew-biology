@@ -1,12 +1,31 @@
 name: Build bottles.
 
 on:
-  pull_request:
-    paths:
-      - 'Formula/*'
+  push:
+    branches: master
+  pull_request: []
 
 jobs:
+  tap_syntax:
+    name: Check tap syntax
+    runs-on: macOS-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up tap
+        run: |
+          set -e
+          brew update
+          REPO=$(brew --repo ${{github.repository}})
+          mkdir -p "$REPO"
+          rm -rf "$REPO"
+          ln -s "$PWD" "$REPO"
+      - name: Check syntax
+        run: |
+          brew test-bot --only-tap-syntax --tap=${{github.repository}}
+
   build-linux:
+    needs: tap_syntax
+    if: github.event_name == 'pull_request'
     name: Build Linux bottle
     runs-on: ubuntu-latest
     container:
@@ -35,7 +54,10 @@ jobs:
         with:
           name: bottles
           path: ${{runner.temp}}/bottles
+
   build-macos:
+    needs: tap_syntax
+    if: github.event_name == 'pull_request'
     name: Build macOS bottle
     runs-on: macos-latest
     steps:
@@ -68,3 +90,4 @@ jobs:
         with:
           name: bottles
           path: ${{runner.temp}}/bottles
+
