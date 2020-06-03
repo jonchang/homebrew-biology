@@ -1,4 +1,5 @@
 class PhlawdDbMaker < Formula
+  # cite Smith_2009: "https://doi.org/10.1186/1471-2148-9-37"
   desc "Creates databases for phlawd and pyPHLAWD"
   homepage "https://github.com/blackrim/phlawd_db_maker"
   url "https://github.com/blackrim/phlawd_db_maker.git",
