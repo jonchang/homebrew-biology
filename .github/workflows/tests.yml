@@ -1,4 +1,4 @@
-name: Build bottles.
+name: CI
 
 on:
   push:
