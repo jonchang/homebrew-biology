@@ -1,13 +1,15 @@
 class PhlawdDbMaker < Formula
   desc "Creates databases for phlawd and pyPHLAWD"
   homepage "https://github.com/blackrim/phlawd_db_maker"
-  url "https://github.com/blackrim/phlawd_db_maker.git", :revision => "dfbf52af3ab355074dd504a1ca22318b2d72a689"
-  version "2018.04.11"
+  url "https://github.com/blackrim/phlawd_db_maker.git",
+    :revision => "72c10e995e7225b6eeb8b0f22cc9dc70017ae43b"
+  version "2020.03.06"
   head "https://github.com/blackrim/phlawd_db_maker.git"
 
   depends_on "cmake" => :build
-  depends_on "sqlite" unless OS.mac?
   depends_on "wget"
+
+  uses_from_macos "sqlite"
 
   def install
     cd "deps/sqlitewrapped-1.3.1" do
