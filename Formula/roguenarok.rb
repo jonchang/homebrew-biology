@@ -4,14 +4,13 @@ class Roguenarok < Formula
   url "https://github.com/aberer/RogueNaRok/archive/v1.0.tar.gz"
   sha256 "91371822f0523f8331647448ae21a9688801c1b4182fd3d40a0555336404ed72"
   head "https://github.com/aberer/RogueNaRok.git"
+  # cite Aberer_2012: "https://doi.org/10.1093/sysbio/sys078"
+
   bottle do
     root_url "https://dl.bintray.com/jonchang/bottles-biology"
     cellar :any_skip_relocation
     sha256 "2334552851d514271db75cd693fe0e7a8434882dee5ed7f06176ed4327795b44" => :catalina
   end
-
-  # doi "10.1093/sysbio/sys078"
-  # tag "bioinformatics"
 
   def install
     system "make", "mode=parallel"
