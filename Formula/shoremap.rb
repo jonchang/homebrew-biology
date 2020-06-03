@@ -1,9 +1,9 @@
 class Shoremap < Formula
+  # cite Sun_2015: "https://doi.org/10.1007/978-1-4939-2444-8_19"
   desc "Fast, accurate identification of causal mutations in plants"
   homepage "http://bioinfo.mpipz.mpg.de/shoremap/index.html"
   url "http://bioinfo.mpipz.mpg.de/shoremap/SHOREmap_v3.6.tar.gz"
   sha256 "0da4179e92cbc68434a9d8eff7bd5fff55c89fd9a543a2db6bd0f69074f2ec70"
-  # cite Sun_2015: "https://doi.org/10.1007/978-1-4939-2444-8_19"
 
   bottle do
     root_url "https://dl.bintray.com/jonchang/bottles-biology"
