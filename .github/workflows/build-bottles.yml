@@ -46,6 +46,7 @@ jobs:
           rm -rf $(brew --repo homebrew/cask)
           rm -rf $(brew --repo homebrew/cask-versions)
           brew update-reset
+          brew cask install xquartz
       - name: Setup tap
         run: |
           mkdir -p "$(dirname $(brew --repo ${{github.repository}}))"
