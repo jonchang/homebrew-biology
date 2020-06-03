@@ -33,32 +33,41 @@ jobs:
     steps:
       - name: Checkout tap
         uses: actions/checkout@v2
-      - name: Setup Homebrew
+      - name: Set up tap
         run: |
-          cd $(brew --repo)
-          git stash
-          git clean -d -f
-      - name: Setup tap
-        run: |
-          mkdir -p "$(dirname $(brew --repo ${{github.repository}}))"
-          cp -a "$GITHUB_WORKSPACE" "$(brew --repo ${{github.repository}})"
-      - name: Build bottles
+          rm -rf $(brew --repository ${{github.repository}})
+          ln -s $GITHUB_WORKSPACE $(brew --repository ${{github.repository}})
+      - name: Run brew test-bot --only-setup
+        run: brew test-bot --only-setup --tap=${{github.repository}}
+      - name: Run brew test-bot --only-formulae
         env:
           HOMEBREW_BINTRAY_URL: https://dl.bintray.com/${{github.event.repository.owner.login}}/bottles-biology
         run: |
           mkdir ~/bottles
           cd ~/bottles
-          brew test-bot --root-url=$HOMEBREW_BINTRAY_URL --tap=jonchang/biology
-      - name: Copy bottles
+          brew test-bot --only-formulae --root-url=$HOMEBREW_BINTRAY_URL --tap=${{github.repository}}
+      - name: Output brew test-bot --only-formulae failures
         if: always()
         run: |
-          cp -a ~/bottles $RUNNER_TEMP/
-      - name: Upload bottles
+            cat ~/bottles/steps_output.txt
+            rm ~/bottles/steps_output.txt
+      - name: Count bottles
+        id: bottles
         if: always()
+        run: |
+          cd ~/bottles
+          count=$(ls *.json | wc -l | xargs echo -n)
+          echo "$count bottles"
+          echo "::set-output name=count::$count"
+      - name: Move bottles
+        if: always() && steps.bottles.outputs.count > 0
+        run: mv ~/bottles $GITHUB_WORKSPACE
+      - name: Upload bottles
+        if: always() && steps.bottles.outputs.count > 0
         uses: actions/upload-artifact@v1
         with:
           name: bottles
-          path: ${{runner.temp}}/bottles
+          path: bottles
 
   build-macos:
     needs: tap_syntax
@@ -74,25 +83,38 @@ jobs:
           rm -rf $(brew --repo homebrew/cask-versions)
           brew update-reset
           brew cask install xquartz
-      - name: Setup tap
+      - name: Set up tap
         run: |
-          mkdir -p "$(dirname $(brew --repo ${{github.repository}}))"
-          cp -a "$GITHUB_WORKSPACE" "$(brew --repo ${{github.repository}})"
-      - name: Build bottles
+          rm -rf $(brew --repository ${{github.repository}})
+          ln -s $GITHUB_WORKSPACE $(brew --repository ${{github.repository}})
+      - name: Run brew test-bot --only-setup
+        run: brew test-bot --only-setup --tap=${{github.repository}}
+      - name: Run brew test-bot --only-formulae
         env:
           HOMEBREW_BINTRAY_URL: https://dl.bintray.com/${{github.event.repository.owner.login}}/bottles-biology
         run: |
           mkdir ~/bottles
           cd ~/bottles
-          brew test-bot --root-url=$HOMEBREW_BINTRAY_URL --tap=jonchang/biology
-      - name: Copy bottles
+          brew test-bot --only-formulae --root-url=$HOMEBREW_BINTRAY_URL --tap=${{github.repository}}
+      - name: Output brew test-bot --only-formulae failures
         if: always()
         run: |
-          cp -a ~/bottles $RUNNER_TEMP/
-      - name: Upload bottles
+            cat ~/bottles/steps_output.txt
+            rm ~/bottles/steps_output.txt
+      - name: Count bottles
+        id: bottles
         if: always()
+        run: |
+          cd ~/bottles
+          count=$(ls *.json | wc -l | xargs echo -n)
+          echo "$count bottles"
+          echo "::set-output name=count::$count"
+      - name: Move bottles
+        if: always() && steps.bottles.outputs.count > 0
+        run: mv ~/bottles $GITHUB_WORKSPACE
+      - name: Upload bottles
+        if: always() && steps.bottles.outputs.count > 0
         uses: actions/upload-artifact@v1
         with:
           name: bottles
-          path: ${{runner.temp}}/bottles
-
+          path: bottles
