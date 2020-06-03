@@ -3,14 +3,14 @@ class Shoremap < Formula
   homepage "http://bioinfo.mpipz.mpg.de/shoremap/index.html"
   url "http://bioinfo.mpipz.mpg.de/shoremap/SHOREmap_v3.6.tar.gz"
   sha256 "0da4179e92cbc68434a9d8eff7bd5fff55c89fd9a543a2db6bd0f69074f2ec70"
+  # cite Sun_2015: "https://doi.org/10.1007/978-1-4939-2444-8_19"
+
   bottle do
     root_url "https://dl.bintray.com/jonchang/bottles-biology"
     cellar :any
     sha256 "b20d8d0905e05b45c12d29d91cb3e72be080b8ae7a69b5c369f48318c9620e71" => :catalina
     sha256 "9afb5753a0fa928613c78c423e9387ec9d012cd6fc8339471b2aaf0d596d5ad0" => :x86_64_linux
   end
-
-  # cite Sun_2015: "https://doi.org/10.1007/978-1-4939-2444-8_19"
 
   depends_on "openmotif"
 
