@@ -33,6 +33,11 @@ jobs:
     steps:
       - name: Checkout tap
         uses: actions/checkout@v2
+      - name: Setup Homebrew
+        run: |
+          cd $(brew --repo)
+          git stash
+          git clean -d -f
       - name: Setup tap
         run: |
           mkdir -p "$(dirname $(brew --repo ${{github.repository}}))"

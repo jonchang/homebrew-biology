@@ -45,7 +45,7 @@ jobs:
           HOMEBREW_BINTRAY_KEY: ${{secrets.HOMEBREW_BINTRAY_KEY}}
           HOMEBREW_BINTRAY_URL: https://dl.bintray.com/${{github.event.repository.owner.login}}/bottles-biology
         run: |
-          cd ~/bottles
+          cd bottles
           brew test-bot --root-url=$HOMEBREW_BINTRAY_URL --bintray-org=$HOMEBREW_BINTRAY_USER --ci-upload --publish
 
       - name: Push bottle commit
