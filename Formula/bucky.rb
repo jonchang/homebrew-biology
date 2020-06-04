@@ -11,7 +11,7 @@ class Bucky < Formula
       system "make"
       bin.install "mbsum", "bucky"
     end
-    pkgshare.install ["data", "scripts", "doc"]
+    pkgshare.install %w[data scripts doc]
   end
 
   test do
