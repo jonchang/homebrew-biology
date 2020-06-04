@@ -2,8 +2,8 @@ class Examl < Formula
   # cite Kozlov_2015: "https://doi.org/10.1093/bioinformatics/btv184"
   desc "Exascale maximum likelihood phylogenetic inference"
   homepage "http://sco.h-its.org/exelixis/web/software/examl/index.html"
-  url "https://github.com/stamatak/ExaML/archive/v3.0.17.tar.gz"
-  sha256 "90a859e0b8fff697722352253e748f03c57b78ec5fbc1ae72f7e702d299dac67"
+  url "https://github.com/stamatak/ExaML/archive/v3.0.22.tar.gz"
+  sha256 "802e673b0c2ea83fdbe6b060048d83f22b6978933a04be64fb9b4334fe318ca3"
   head "https://github.com/stamatak/ExaML.git"
 
   depends_on "open-mpi"
