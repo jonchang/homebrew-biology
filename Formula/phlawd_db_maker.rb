@@ -7,6 +7,13 @@ class PhlawdDbMaker < Formula
   version "2020.03.06"
   head "https://github.com/blackrim/phlawd_db_maker.git"
 
+  bottle do
+    root_url "https://dl.bintray.com/jonchang/bottles-biology"
+    cellar :any_skip_relocation
+    sha256 "a70990f994f33d665ad74556a1424c1eb8e91a5aa1298af826769d13523d307e" => :catalina
+    sha256 "c05cdecc545234e956e062702a51065fa82f4ed13b32ef89b0d3542b3384a8d3" => :x86_64_linux
+  end
+
   depends_on "cmake" => :build
   depends_on "wget"
 
