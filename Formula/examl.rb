@@ -6,6 +6,13 @@ class Examl < Formula
   sha256 "802e673b0c2ea83fdbe6b060048d83f22b6978933a04be64fb9b4334fe318ca3"
   head "https://github.com/stamatak/ExaML.git"
 
+  bottle do
+    root_url "https://dl.bintray.com/jonchang/bottles-biology"
+    cellar :any
+    sha256 "b3629ff42edbe5777c9ff25ca65d109bc3ca395812a8e7e73f3390a854fa4d68" => :catalina
+    sha256 "16d364c9fbd2bc40698cd5c5d4da10332f465f2a154a6bb6961450c32b48d350" => :x86_64_linux
+  end
+
   depends_on "open-mpi"
 
   def install
