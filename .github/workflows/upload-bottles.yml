@@ -10,8 +10,6 @@ on:
 jobs:
   upload-bottles:
     runs-on: ubuntu-latest
-    container:
-      image: homebrew/brew
     steps:
       - name: Determine associated pull request
         uses: actions/github-script@0.9.0
@@ -28,6 +26,10 @@ jobs:
             }
             core.setOutput("number", prs.data[0].number.toString())
             core.setOutput("head_sha", prs.data[0].head.sha)
+
+      - name: Tap git repository
+        run: |
+          brew tap ${{github.repository}}
 
       - name: Download workflow artifacts
         uses: Homebrew/actions/download-artifact@master
