@@ -10,6 +10,9 @@ on:
 jobs:
   upload-bottles:
     runs-on: ubuntu-latest
+    env:
+      GIT_COMMITTER_NAME: ${{github.event.pusher.name}}
+      GIT_COMMITTER_EMAIL: ${{github.event.pusher.email}}
     steps:
       - name: Determine associated pull request
         uses: actions/github-script@0.9.0
@@ -51,9 +54,6 @@ jobs:
           brew pr-upload --root-url=$HOMEBREW_BINTRAY_URL --bintray-org=$HOMEBREW_BINTRAY_USER
 
       - name: Push bottle commit
-        env:
-          GIT_COMMITTER_NAME: ${{github.event.pusher.name}}
-          GIT_COMMITTER_EMAIL: ${{github.event.pusher.email}}
         run: |
           cd $(brew --repo ${{github.repository}})
           git commit --amend --no-edit
