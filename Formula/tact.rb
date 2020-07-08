@@ -1,9 +1,8 @@
 class Tact < Formula
   desc "Taxonomic addition for complete phylogenies"
   homepage "https://github.com/jonchang/tact"
-  url "https://github.com/jonchang/tact/archive/v0.2.4.tar.gz"
-  sha256 "ec78f2c82e372aef23abd7104465a8684f7060ffbf67fa8bdafa7019645c27bc"
-  revision 1
+  url "https://github.com/jonchang/tact/archive/v0.2.5.tar.gz"
+  sha256 "1a8a37f149ddb468fa05ddcaef1ddb18eccba4cd1222b5f5dbfb157a99ad6e2b"
 
   bottle do
     root_url "https://dl.bintray.com/jonchang/bottles-biology"
