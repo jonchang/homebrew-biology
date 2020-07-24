@@ -3,8 +3,9 @@ class Bucky < Formula
   desc "Bayesian concordance analysis of gene trees"
   homepage "http://www.stat.wisc.edu/~ane/bucky/"
   url "http://www.stat.wisc.edu/~ane/bucky/v1.4/bucky-1.4.4.tgz"
-  sha256 "1621fee0d42314d9aa45d0082b358d4531e7d1d1a0089c807c1b21fbdc4e4592"
   head "https://github.com/jonchang/bucky.git"
+  sha256 "1621fee0d42314d9aa45d0082b358d4531e7d1d1a0089c807c1b21fbdc4e4592"
+  license "BADLICENSE"
 
   bottle do
     root_url "https://dl.bintray.com/jonchang/bottles-biology"
