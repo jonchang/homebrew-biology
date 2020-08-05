@@ -1,7 +1,7 @@
 class Poy5 < Formula
   desc "Phylogenetic Application written in OCaml and C"
   homepage "https://www.amnh.org/research/computational-sciences/poy"
-  url "https://github.com/amnh/poy5.git", :revision => "da563a2339d3fa9c0110ae86cc35fad576f728ab"
+  url "https://github.com/amnh/poy5.git", revision: "da563a2339d3fa9c0110ae86cc35fad576f728ab"
   version "2020.29.01"
 
   bottle do

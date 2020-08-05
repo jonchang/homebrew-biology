@@ -4,7 +4,7 @@ class Revbayes < Formula
   homepage "https://revbayes.github.io/"
   url "https://github.com/revbayes/revbayes.archive/archive/v1.0.13.tar.gz"
   sha256 "e85e2e1fe182fe9f504900150d936a06d252a362c591b9d3d8272dd085aa85d9"
-  head "https://github.com/revbayes/revbayes.git", :branch => "development"
+  head "https://github.com/revbayes/revbayes.git", branch: "development"
 
   bottle do
     root_url "https://dl.bintray.com/jonchang/bottles-biology"

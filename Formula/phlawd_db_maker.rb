@@ -3,7 +3,7 @@ class PhlawdDbMaker < Formula
   desc "Creates databases for phlawd and pyPHLAWD"
   homepage "https://github.com/blackrim/phlawd_db_maker"
   url "https://github.com/blackrim/phlawd_db_maker.git",
-    :revision => "72c10e995e7225b6eeb8b0f22cc9dc70017ae43b"
+    revision: "72c10e995e7225b6eeb8b0f22cc9dc70017ae43b"
   version "2020.03.06"
   head "https://github.com/blackrim/phlawd_db_maker.git"
 

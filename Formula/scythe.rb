@@ -2,7 +2,7 @@ class Scythe < Formula
   desc "Bayesian adapter trimmer"
   homepage "https://github.com/vsbuffalo/scythe"
   url "https://github.com/vsbuffalo/scythe.git",
-      :revision => "20d3cff7d7f483bd779aff75f861e93708c0a2b5"
+      revision: "20d3cff7d7f483bd779aff75f861e93708c0a2b5"
   version "0.994"
   head "https://github.com/vsbuffalo/scythe.git"
 

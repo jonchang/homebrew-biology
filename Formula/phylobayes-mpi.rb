@@ -1,7 +1,7 @@
 class PhylobayesMpi < Formula
   desc "Phylogenetic reconstruction using infinite mixtures"
   homepage "http://megasun.bch.umontreal.ca/People/lartillot/www/downloadmpi.html"
-  url "https://github.com/bayesiancook/pbmpi.git", :revision => "c509b221f9dd29a456efe2ec74dea316f4dd3200"
+  url "https://github.com/bayesiancook/pbmpi.git", revision: "c509b221f9dd29a456efe2ec74dea316f4dd3200"
   version "2018.03.08"
 
   depends_on "open-mpi"

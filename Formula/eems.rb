@@ -1,7 +1,7 @@
 class Eems < Formula
   desc "Estimating Effective Migration Surfaces"
   homepage "https://github.com/dipetkov/eems"
-  url "https://github.com/dipetkov/eems.git", :revision => "42bc6c7379295b91f38eedf0a3723e1bf3cf4264"
+  url "https://github.com/dipetkov/eems.git", revision: "42bc6c7379295b91f38eedf0a3723e1bf3cf4264"
   version "2018.09.17"
   revision 2
   head stable.url

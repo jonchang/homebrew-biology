@@ -2,7 +2,7 @@ class Phyluce < Formula
   include Language::Python::Virtualenv
 
   desc "Pipeline for UCE (and general) phylogenomics"
-  homepage "https://phyluce.readthedocs.org/"
+  homepage "https://phyluce.readthedocs.io/"
   url "https://github.com/faircloth-lab/phyluce/archive/v1.6.7.tar.gz"
   sha256 "98c213ab1610506722ad1440ffc93f9cbc78d8b3aaf3d9a47837e1231452cdb6"
 

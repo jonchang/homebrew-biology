@@ -1,7 +1,7 @@
 class RRequirement < Requirement
   fatal true
 
-  satisfy(:build_env => false) { which("R") }
+  satisfy(build_env: false) { which("R") }
 
   def message
     <<~EOS
@@ -34,7 +34,7 @@ class Sowhat < Formula
     system perl, "Makefile.PL", "PREFIX=#{libexec}"
     system "make", "test"
     system "make", "install"
-    (bin/"sowhat").write_env_script("#{libexec}/bin/sowhat", :PERL5LIB => ENV["PERL5LIB"])
+    (bin/"sowhat").write_env_script("#{libexec}/bin/sowhat", PERL5LIB: ENV["PERL5LIB"])
     pkgshare.install "examples"
     pkgshare.install "published_datasets"
   end
