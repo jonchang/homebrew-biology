@@ -11,7 +11,9 @@ class Poy5 < Formula
     sha256 "c94e7b16afe2dc77a0c2e908d9d130b4a621d2f5df65909c30bc3fd5f67504d4" => :x86_64_linux
   end
 
-  depends_on "camlp4" => :build
+  disable! because: "camlp4 is gone"
+
+  depends_on "camlp5" => :build
   depends_on "ocaml" => :build
   depends_on "ocamlbuild" => :build
   depends_on "openblas" if OS.linux?
