@@ -83,8 +83,8 @@ jobs:
         run: |
           rm -rf $(brew --repo homebrew/cask)
           rm -rf $(brew --repo homebrew/cask-versions)
+          rm -rf $(brew --cellar)/*
           brew update-reset
-          brew rm $(brew ls)
           brew cleanup
           brew cask install xquartz
       - name: Set up tap
