@@ -6,7 +6,7 @@ class PhylobayesMpi < Formula
 
   depends_on "open-mpi"
 
-  conflicts_with "phylobayes"
+  conflicts_with "brewsci/bio/phylobayes"
 
   def install
     cd "sources" do
