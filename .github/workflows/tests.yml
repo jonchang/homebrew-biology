@@ -84,8 +84,7 @@ jobs:
           rm -rf $(brew --repo homebrew/cask)
           rm -rf $(brew --repo homebrew/cask-versions)
           rm -rf $(brew --cellar)/*
-          rm -rf $(brew --prefix)/lib/*
-          rm -rf $(brew --prefix)/include/*
+          sudo rm -rf /usr/local/include/* /usr/local/lib/*
           brew update-reset
           brew cleanup
           brew cask install xquartz
