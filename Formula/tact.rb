@@ -3,8 +3,8 @@ class Tact < Formula
 
   desc "Taxonomic addition for complete phylogenies"
   homepage "https://github.com/jonchang/tact"
-  url "https://github.com/jonchang/tact/archive/v0.3.2.tar.gz"
-  sha256 "32f053e916b743a9174783cc04bcab376b320d6bd6d06474241e5489bf45aabb"
+  url "https://github.com/jonchang/tact/archive/v0.3.3.tar.gz"
+  sha256 "146218c7e4f510919542389976a0362cc71e75df39151422b6277e9f4b7642eb"
 
   bottle do
     root_url "https://dl.bintray.com/jonchang/bottles-biology"
@@ -14,12 +14,12 @@ class Tact < Formula
   end
 
   depends_on "numpy"
-  depends_on "python@3.8"
+  depends_on "python@3.9"
   depends_on "scipy"
 
   resource "DendroPy" do
-    url "https://files.pythonhosted.org/packages/f5/21/17e4fbb1c2a68421eec43930b1e118660c7483229f1b28ba4402e8856884/DendroPy-4.4.0.tar.gz"
-    sha256 "f0a0e2ce78b3ed213d6c1791332d57778b7f63d602430c1548a5d822acf2799c"
+    url "https://files.pythonhosted.org/packages/e0/f3/222e939e250e71234031d182e58704fff1c3296140f91f70d7ef8b3e17a6/DendroPy-4.5.1.tar.gz"
+    sha256 "3503b170ba4830239dfa93371d210367a3be5825c3cb23ad7504a0feb3be7dbe"
   end
 
   resource "click" do
@@ -28,8 +28,8 @@ class Tact < Formula
   end
 
   resource "poetry_core" do
-    url "https://files.pythonhosted.org/packages/1b/47/3f770be8226e0e34d40dbe42e19076c793194ea936163c9fb1c79e9510f5/poetry-core-1.0.0a8.tar.gz"
-    sha256 "02237e5abaa4fda4ef865cc49111a3f8a7999cfb149b30d5e93f85c3acdc4d95"
+    url "https://files.pythonhosted.org/packages/42/21/5335c7eceff3dccb3b415018bb17db0c442b599f610fd5712021d5f9403f/poetry-core-1.0.0.tar.gz"
+    sha256 "6a664ff389b9f45382536f8fa1611a0cb4d2de7c5a5c885db1f0c600cd11fbd5"
   end
 
   def install
