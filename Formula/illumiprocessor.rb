@@ -5,8 +5,8 @@ class Illumiprocessor < Formula
   url "https://github.com/faircloth-lab/illumiprocessor/archive/v2.0.9.tar.gz"
   sha256 "81a70360e43622d7ec73068d5d0fe79f7c82d7a8c50099b07e703431f220b1fd"
 
-  depends_on :java
-  depends_on "pypy"
+  depends_on "openjdk"
+  depends_on "python@3.9"
 
   resource "trimmomatic-0.32" do
     url "http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/Trimmomatic-0.32.zip"
@@ -14,7 +14,7 @@ class Illumiprocessor < Formula
   end
 
   def install
-    venv = virtualenv_create(libexec)
+    venv = virtualenv_create(libexec, "python3")
     venv.pip_install_and_link buildpath
     resource("trimmomatic-0.32").stage do
       libexec.install "trimmomatic-0.32.jar"
@@ -29,6 +29,6 @@ class Illumiprocessor < Formula
   end
 
   test do
-    false
+    nil
   end
 end
