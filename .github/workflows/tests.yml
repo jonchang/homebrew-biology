@@ -105,8 +105,6 @@ jobs:
 
       - run: brew test-bot --only-cleanup-before --tap=${{github.repository}}
 
-      - run: brew cask install xquartz
-
       - run: brew test-bot --only-setup --tap=${{github.repository}}
 
       - name: Run brew test-bot --only-formulae
