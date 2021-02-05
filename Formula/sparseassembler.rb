@@ -7,9 +7,8 @@ class Sparseassembler < Formula
 
   bottle do
     root_url "https://dl.bintray.com/jonchang/bottles-biology"
-    cellar :any_skip_relocation
-    sha256 "29406820504f6539ce2db4175c20ef465a0cb6d76afd5370b77ae11c01cd3f77" => :catalina
-    sha256 "4a0e734e525c853d22cdc1f2fd20797f7b73d892e750622d0688ba7ebb8ec06a" => :x86_64_linux
+    sha256 cellar: :any_skip_relocation, catalina:     "29406820504f6539ce2db4175c20ef465a0cb6d76afd5370b77ae11c01cd3f77"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "4a0e734e525c853d22cdc1f2fd20797f7b73d892e750622d0688ba7ebb8ec06a"
   end
 
   resource "testdata" do
