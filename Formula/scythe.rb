@@ -8,9 +8,8 @@ class Scythe < Formula
 
   bottle do
     root_url "https://dl.bintray.com/jonchang/bottles-biology"
-    cellar :any_skip_relocation
-    sha256 "be1d2171aaed9f971175d104558546ad398acf44846ec00a08ce65fc44019ebb" => :catalina
-    sha256 "738d10646a49bcea042e37b33e6a1bb8eaf9652097eb749b153bfa81ae8950a7" => :x86_64_linux
+    sha256 cellar: :any_skip_relocation, catalina:     "be1d2171aaed9f971175d104558546ad398acf44846ec00a08ce65fc44019ebb"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "738d10646a49bcea042e37b33e6a1bb8eaf9652097eb749b153bfa81ae8950a7"
   end
 
   def install
