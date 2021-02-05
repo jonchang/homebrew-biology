@@ -8,9 +8,8 @@ class Examl < Formula
 
   bottle do
     root_url "https://dl.bintray.com/jonchang/bottles-biology"
-    cellar :any
-    sha256 "b3629ff42edbe5777c9ff25ca65d109bc3ca395812a8e7e73f3390a854fa4d68" => :catalina
-    sha256 "16d364c9fbd2bc40698cd5c5d4da10332f465f2a154a6bb6961450c32b48d350" => :x86_64_linux
+    sha256 cellar: :any, catalina:     "b3629ff42edbe5777c9ff25ca65d109bc3ca395812a8e7e73f3390a854fa4d68"
+    sha256 cellar: :any, x86_64_linux: "16d364c9fbd2bc40698cd5c5d4da10332f465f2a154a6bb6961450c32b48d350"
   end
 
   depends_on "open-mpi"
