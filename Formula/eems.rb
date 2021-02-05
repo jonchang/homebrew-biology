@@ -8,9 +8,8 @@ class Eems < Formula
 
   bottle do
     root_url "https://dl.bintray.com/jonchang/bottles-biology"
-    cellar :any
-    sha256 "e9f69c5adabbb3c14b2c0bfa2a6e6d3ddff63c6b2f982d97444a0f40471a9e48" => :catalina
-    sha256 "4d9684b5873e9d4d5fc29f3262c209275c4400d81ef1a988de6268447b00db7a" => :x86_64_linux
+    sha256 cellar: :any, catalina:     "e9f69c5adabbb3c14b2c0bfa2a6e6d3ddff63c6b2f982d97444a0f40471a9e48"
+    sha256 cellar: :any, x86_64_linux: "4d9684b5873e9d4d5fc29f3262c209275c4400d81ef1a988de6268447b00db7a"
   end
 
   depends_on "autoconf" => :build
