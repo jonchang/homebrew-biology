@@ -7,9 +7,8 @@ class Phylocom < Formula
 
   bottle do
     root_url "https://dl.bintray.com/jonchang/bottles-biology"
-    cellar :any_skip_relocation
-    sha256 "ded32f4876f63cc84dc39c3ff97e2228ac1b27aacb4fb9187835182409a41df7" => :catalina
-    sha256 "6fefbc1aa15381b61f15050ee8d6ca120cf8e59c13e065667843cc02c440f027" => :x86_64_linux
+    sha256 cellar: :any_skip_relocation, catalina:     "ded32f4876f63cc84dc39c3ff97e2228ac1b27aacb4fb9187835182409a41df7"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "6fefbc1aa15381b61f15050ee8d6ca120cf8e59c13e065667843cc02c440f027"
   end
 
   def install
