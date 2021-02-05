@@ -9,9 +9,8 @@ class PhlawdDbMaker < Formula
 
   bottle do
     root_url "https://dl.bintray.com/jonchang/bottles-biology"
-    cellar :any_skip_relocation
-    sha256 "a70990f994f33d665ad74556a1424c1eb8e91a5aa1298af826769d13523d307e" => :catalina
-    sha256 "c05cdecc545234e956e062702a51065fa82f4ed13b32ef89b0d3542b3384a8d3" => :x86_64_linux
+    sha256 cellar: :any_skip_relocation, catalina:     "a70990f994f33d665ad74556a1424c1eb8e91a5aa1298af826769d13523d307e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "c05cdecc545234e956e062702a51065fa82f4ed13b32ef89b0d3542b3384a8d3"
   end
 
   depends_on "cmake" => :build
