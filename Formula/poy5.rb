@@ -6,9 +6,8 @@ class Poy5 < Formula
 
   bottle do
     root_url "https://dl.bintray.com/jonchang/bottles-biology"
-    cellar :any_skip_relocation
-    sha256 "ba6c6f5238f00d517ccc815dd61c5e7219d4a1877a338ecb65a0e4ab382542a1" => :catalina
-    sha256 "c94e7b16afe2dc77a0c2e908d9d130b4a621d2f5df65909c30bc3fd5f67504d4" => :x86_64_linux
+    sha256 cellar: :any_skip_relocation, catalina:     "ba6c6f5238f00d517ccc815dd61c5e7219d4a1877a338ecb65a0e4ab382542a1"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "c94e7b16afe2dc77a0c2e908d9d130b4a621d2f5df65909c30bc3fd5f67504d4"
   end
 
   disable! because: "camlp4 is gone"
