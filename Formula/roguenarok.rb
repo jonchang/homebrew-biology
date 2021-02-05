@@ -8,8 +8,7 @@ class Roguenarok < Formula
 
   bottle do
     root_url "https://dl.bintray.com/jonchang/bottles-biology"
-    cellar :any_skip_relocation
-    sha256 "2334552851d514271db75cd693fe0e7a8434882dee5ed7f06176ed4327795b44" => :catalina
+    sha256 cellar: :any_skip_relocation, catalina: "2334552851d514271db75cd693fe0e7a8434882dee5ed7f06176ed4327795b44"
   end
 
   def install
