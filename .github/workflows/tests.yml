@@ -35,7 +35,7 @@ jobs:
       - run: brew test-bot --only-tap-syntax
 
       - run: |
-          brew test-bot --only-formulae --only-json-tab --skip-recursive-dependents
+          brew test-bot --only-formulae --only-json-tab --skip-recursive-dependents --root-url="https://ghcr.io/v2/jonchang/biology"
         if: github.event_name == 'pull_request'
 
       - name: Upload bottles as artifact
@@ -52,7 +52,7 @@ jobs:
     steps:
       - uses: actions/github-script@v3
         with:
-          github-token: ${{secrets.HOMEBREW_GITHUB_API_TOKEN}}
+          github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             github.issues.addLabels({
               ...context.repo,
