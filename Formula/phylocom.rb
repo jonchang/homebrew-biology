@@ -5,12 +5,6 @@ class Phylocom < Formula
   sha256 "f4f111adedfc91f2316b08ec5a994da83888bb1c0acd6076083112a5f51583c7"
   head "https://github.com/phylocom/phylocom.git"
 
-  bottle do
-    root_url "https://dl.bintray.com/jonchang/bottles-biology"
-    sha256 cellar: :any_skip_relocation, catalina:     "ded32f4876f63cc84dc39c3ff97e2228ac1b27aacb4fb9187835182409a41df7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "6fefbc1aa15381b61f15050ee8d6ca120cf8e59c13e065667843cc02c440f027"
-  end
-
   def install
     cd "src" do
       system "make"
