@@ -6,12 +6,6 @@ class Tact < Formula
   url "https://github.com/jonchang/tact/archive/v0.3.4.tar.gz"
   sha256 "20f70e893a1560e6f57b9dddd6b49bdf7abe45e9770dc48a088e1bf10c01791c"
 
-  bottle do
-    root_url "https://dl.bintray.com/jonchang/bottles-biology"
-    sha256 cellar: :any_skip_relocation, catalina:     "cb37f9e1f2a6c330b86d62997eaa04dc14bf782e83344bd6998dd24eee7bcf37"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "f2a8e7d686e2ba5315ce06cc2a3ec89bc1cb0207b64a4b92308a947b2bf7368a"
-  end
-
   depends_on "numpy"
   depends_on "python@3.9"
   depends_on "scipy"
