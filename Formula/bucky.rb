@@ -6,12 +6,6 @@ class Bucky < Formula
   sha256 "1621fee0d42314d9aa45d0082b358d4531e7d1d1a0089c807c1b21fbdc4e4592"
   head "https://github.com/jonchang/bucky.git"
 
-  bottle do
-    root_url "https://dl.bintray.com/jonchang/bottles-biology"
-    sha256 cellar: :any_skip_relocation, catalina:     "17ddd62791d2ddf08f77707d73800a5b06fea32ace204dd83042acb29606e9da"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "5f7b2a1a40f3b089b0c8834ff8fffa3af10c4ce0350c5721b04ae8b267198fb5"
-  end
-
   def install
     cd "src" do
       system "make"
