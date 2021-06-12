@@ -6,11 +6,6 @@ class Roguenarok < Formula
   sha256 "91371822f0523f8331647448ae21a9688801c1b4182fd3d40a0555336404ed72"
   head "https://github.com/aberer/RogueNaRok.git"
 
-  bottle do
-    root_url "https://dl.bintray.com/jonchang/bottles-biology"
-    sha256 cellar: :any_skip_relocation, catalina: "2334552851d514271db75cd693fe0e7a8434882dee5ed7f06176ed4327795b44"
-  end
-
   def install
     system "make", "mode=parallel"
     bin.install %w[RogueNaRok-parallel rnr-lsi rnr-mast rnr-prune rnr-tii]
