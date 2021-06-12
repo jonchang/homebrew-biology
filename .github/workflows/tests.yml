@@ -1,158 +1,61 @@
-name: CI
-
+name: brew test-bot
 on:
   push:
     branches: master
-  pull_request: []
-
+  pull_request:
 jobs:
-  tap_syntax:
-    name: Check tap syntax
-    if: github.repository == 'jonchang/homebrew-biology'
-    runs-on: ubuntu-latest
-    steps:
-    - name: Set up Homebrew
-      id: set-up-homebrew
-      uses: Homebrew/actions/setup-homebrew@master
-
-    - name: Cache Bundler RubyGems
-      uses: actions/cache@v1
-      with:
-        path: ${{ steps.set-up-homebrew.outputs.gems-path }}
-        key: ${{ runner.os }}-rubygems-${{ steps.set-up-homebrew.outputs.gems-hash }}
-        restore-keys: ${{ runner.os }}-rubygems-
-
-    - name: Install Bundler RubyGems
-      run: brew install-bundler-gems
-
-    - run: brew test-bot --only-tap-syntax --tap=${{github.repository}}
-
-  build-linux:
-    needs: tap_syntax
-    if: github.event_name == 'pull_request'
-    name: Build Linux bottle
-    runs-on: ubuntu-latest
-    container:
-      image: homebrew/ubuntu16.04:master
+  test-bot:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macOS-latest]
+    runs-on: ${{ matrix.os }}
+    env:
+      HOMEBREW_FORCE_VENDOR_RUBY: 1
     steps:
       - name: Set up Homebrew
         id: set-up-homebrew
         uses: Homebrew/actions/setup-homebrew@master
 
-      - run: brew test-bot --only-cleanup-before --tap=${{github.repository}}
-
-      - run: brew test-bot --only-setup --tap=${{github.repository}}
-
-      - name: Run brew test-bot --only-formulae
-        env:
-          HOMEBREW_BINTRAY_URL: https://dl.bintray.com/${{github.event.repository.owner.login}}/bottles-biology
-        run: |
-          mkdir ~/bottles
-          cd ~/bottles
-          brew test-bot --skip-recursive-dependents --only-formulae --root-url=$HOMEBREW_BINTRAY_URL --tap=${{github.repository}}
-
-      - name: Output brew test-bot --only-formulae failures
-        if: always()
-        run: |
-            cat ~/bottles/steps_output.txt
-            rm ~/bottles/steps_output.txt
-
-      - name: Upload logs
-        if: failure()
-        uses: actions/upload-artifact@main
+      - name: Cache Homebrew Bundler RubyGems
+        id: cache
+        uses: actions/cache@v1
         with:
-          name: logs
-          path: ~/bottles/logs
+          path: ${{ steps.set-up-homebrew.outputs.gems-path }}
+          key: ${{ runner.os }}-rubygems-${{ steps.set-up-homebrew.outputs.gems-hash }}
+          restore-keys: ${{ runner.os }}-rubygems-
 
-      - name: Delete logs and home
-        if: always()
-        run: |
-          rm -rvf ~/bottles/logs
-          rm -rvf ~/bottles/home
+      - name: Install Homebrew Bundler RubyGems
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: brew install-bundler-gems
 
-      - name: Count bottles
-        id: bottles
-        if: always()
-        run: |
-          cd ~/bottles
-          count=$(ls *.json | wc -l | xargs echo -n)
-          echo "$count bottles"
-          echo "::set-output name=count::$count"
+      - run: brew test-bot --only-cleanup-before
 
-      - name: Upload bottles
-        if: always() && steps.bottles.outputs.count > 0
+      - run: brew test-bot --only-setup
+
+      - run: brew test-bot --only-tap-syntax
+
+      - run: |
+          brew test-bot --only-formulae --only-json-tab --skip-recursive-dependents
+        if: github.event_name == 'pull_request'
+
+      - name: Upload bottles as artifact
+        if: always() && github.event_name == 'pull_request'
         uses: actions/upload-artifact@main
         with:
           name: bottles
-          path: ~/bottles
+          path: '*.bottle.*'
 
-      - run: brew test-bot --only-cleanup-after
-        if: always()
-
-      - name: Post Cleanup
-        if: always()
-        run: rm -rvf ~/bottles
-
-  build-macos:
-    needs: tap_syntax
+  automerge:
+    runs-on: ubuntu-latest
+    needs: test-bot
     if: github.event_name == 'pull_request'
-    name: Build macOS bottle
-    runs-on: macos-latest
     steps:
-      - name: Set up Homebrew
-        id: set-up-homebrew
-        uses: Homebrew/actions/setup-homebrew@master
-
-      - run: brew test-bot --only-cleanup-before --tap=${{github.repository}}
-
-      - run: brew test-bot --only-setup --tap=${{github.repository}}
-
-      - name: Run brew test-bot --only-formulae
-        env:
-          HOMEBREW_BINTRAY_URL: https://dl.bintray.com/${{github.event.repository.owner.login}}/bottles-biology
-        run: |
-          mkdir bottles
-          cd bottles
-          brew test-bot --only-formulae --root-url=$HOMEBREW_BINTRAY_URL --tap=${{github.repository}}
-
-      - name: Output brew test-bot --only-formulae failures
-        if: always()
-        run: |
-            cat bottles/steps_output.txt
-            rm bottles/steps_output.txt
-
-      - name: Upload logs
-        if: failure()
-        uses: actions/upload-artifact@main
+      - uses: actions/github-script@v3
         with:
-          name: logs
-          path: bottles/logs
-
-      - name: Delete logs and home
-        if: always()
-        run: |
-          rm -rvf bottles/logs
-          rm -rvf bottles/home
-
-      - name: Count bottles
-        id: bottles
-        if: always()
-        run: |
-          cd bottles
-          count=$(ls *.json | wc -l | xargs echo -n)
-          echo "$count bottles"
-          echo "::set-output name=count::$count"
-
-      - name: Upload bottles
-        if: always() && steps.bottles.outputs.count > 0
-        uses: actions/upload-artifact@main
-        with:
-          name: bottles
-          path: bottles
-
-      - run: brew test-bot --only-cleanup-after
-        if: always()
-
-      - name: Post Cleanup
-        if: always()
-        run: rm -rvf ~/bottles
+          github-token: ${{secrets.HOMEBREW_GITHUB_API_TOKEN}}
+          script: |
+            github.issues.addLabels({
+              ...context.repo,
+              issue_number: context.issue.number,
+              labels: ["pr-pull"]
+            })
