@@ -5,6 +5,7 @@ class Tact < Formula
   homepage "https://github.com/jonchang/tact"
   url "https://github.com/jonchang/tact/archive/v0.3.4.tar.gz"
   sha256 "20f70e893a1560e6f57b9dddd6b49bdf7abe45e9770dc48a088e1bf10c01791c"
+  revision 1
 
   depends_on "numpy"
   depends_on "python@3.9"
