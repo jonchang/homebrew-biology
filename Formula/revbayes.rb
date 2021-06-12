@@ -6,12 +6,6 @@ class Revbayes < Formula
   sha256 "e85e2e1fe182fe9f504900150d936a06d252a362c591b9d3d8272dd085aa85d9"
   head "https://github.com/revbayes/revbayes.git", branch: "development"
 
-  bottle do
-    root_url "https://dl.bintray.com/jonchang/bottles-biology"
-    sha256 cellar: :any, catalina:     "82cec4e0172463fa35d076e4202c64fca5ecb0401bc6e5def305771babd427f4"
-    sha256 cellar: :any, x86_64_linux: "1b5ac34d369809ec0a34ffb6c6764bcd2ce42b05ae68a403a074e0a4f606e317"
-  end
-
   depends_on "meson" => :build
   depends_on "ninja" => :build
   depends_on "boost"
