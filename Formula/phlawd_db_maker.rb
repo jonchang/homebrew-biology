@@ -7,6 +7,12 @@ class PhlawdDbMaker < Formula
   version "2021.01.25"
   head "https://github.com/blackrim/phlawd_db_maker.git"
 
+  bottle do
+    root_url "https://ghcr.io/v2/jonchang/biology"
+    sha256 cellar: :any_skip_relocation, catalina:     "34038c746a4356ed9d016c2382ddf321acc9fb6e74bbe65fb50ed084b26541fe"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "f2a93cf8dc26c5ce33ca0a11198cda95bfc8b650ee98e7e93b7d6b9dbb2017fa"
+  end
+
   depends_on "cmake" => :build
   depends_on "wget"
 
