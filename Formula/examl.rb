@@ -6,6 +6,13 @@ class Examl < Formula
   sha256 "802e673b0c2ea83fdbe6b060048d83f22b6978933a04be64fb9b4334fe318ca3"
   head "https://github.com/stamatak/ExaML.git"
 
+  bottle do
+    root_url "https://ghcr.io/v2/jonchang/biology"
+    rebuild 1
+    sha256 cellar: :any,                 catalina:     "12ee8f3b9c2d424cdf30c5f0c46372c8287dce5c33c87b6ff0a95186b9e37a1b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "624e89db9309eef2e373856bc1626ad3f70e1991bb46a666e346ce969f2abee0"
+  end
+
   depends_on "open-mpi"
 
   def install
