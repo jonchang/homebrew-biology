@@ -3,8 +3,8 @@ class Tact < Formula
 
   desc "Taxonomic addition for complete phylogenies"
   homepage "https://github.com/jonchang/tact"
-  url "https://github.com/jonchang/tact/archive/v0.3.4.tar.gz"
-  sha256 "20f70e893a1560e6f57b9dddd6b49bdf7abe45e9770dc48a088e1bf10c01791c"
+  url "https://github.com/jonchang/tact/archive/v0.4.0.tar.gz"
+  sha256 "d33b3094c79e7a07f8c7b77e8bf1e95b014465c1ef8ef77ca93b931b8d6e4d07"
 
   bottle do
     root_url "https://ghcr.io/v2/jonchang/biology"
@@ -17,19 +17,19 @@ class Tact < Formula
   depends_on "python@3.9"
   depends_on "scipy"
 
-  resource "DendroPy" do
-    url "https://files.pythonhosted.org/packages/e0/f3/222e939e250e71234031d182e58704fff1c3296140f91f70d7ef8b3e17a6/DendroPy-4.5.1.tar.gz"
-    sha256 "3503b170ba4830239dfa93371d210367a3be5825c3cb23ad7504a0feb3be7dbe"
-  end
-
   resource "click" do
-    url "https://files.pythonhosted.org/packages/27/6f/be940c8b1f1d69daceeb0032fee6c34d7bd70e3e649ccac0951500b4720e/click-7.1.2.tar.gz"
-    sha256 "d2b5255c7c6349bc1bd1e59e08cd12acbbd63ce649f2588755783aa94dfb6b1a"
+    url "https://files.pythonhosted.org/packages/21/83/308a74ca1104fe1e3197d31693a7a2db67c2d4e668f20f43a2fca491f9f7/click-8.0.1.tar.gz"
+    sha256 "8c04c11192119b1ef78ea049e0a6f0463e4c48ef00a30160c704337586f3ad7a"
   end
 
-  resource "poetry_core" do
-    url "https://files.pythonhosted.org/packages/42/21/5335c7eceff3dccb3b415018bb17db0c442b599f610fd5712021d5f9403f/poetry-core-1.0.0.tar.gz"
-    sha256 "6a664ff389b9f45382536f8fa1611a0cb4d2de7c5a5c885db1f0c600cd11fbd5"
+  resource "DendroPy" do
+    url "https://files.pythonhosted.org/packages/f9/10/125c181b1d97ffc4661a60ec897cfe058dc46cb53900d807819464c3510f/DendroPy-4.5.2.tar.gz"
+    sha256 "3e5d2522170058ebc8d1ee63a7f2d25b915e34957dc02693ebfdc15f347a0101"
+  end
+
+  resource "poetry-core" do
+    url "https://files.pythonhosted.org/packages/d0/b3/1017f2f6d801f1e3e4ffee3f058a10d20df1a9560aba9c5b49e92cdd9912/poetry-core-1.0.3.tar.gz"
+    sha256 "2315c928249fc3207801a81868b64c66273077b26c8d8da465dccf8f488c90c5"
   end
 
   def install
