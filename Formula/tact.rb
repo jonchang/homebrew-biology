@@ -8,8 +8,8 @@ class Tact < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/jonchang/biology"
-    sha256 cellar: :any_skip_relocation, catalina:     "44b54671f6fb822669b4fcff858c31754606c00160b836054e1eef0395ce76e1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "995f73b8537d1c4238f9b9911ac7b316e5617fa76ea9feaff0e891e7f5323c8e"
+    sha256 cellar: :any_skip_relocation, catalina:     "5a43b66e1f939e548b416edd6d9b5a5cae0588eeba7ddd7d66b9b69d52f4110e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "154484593ffcb6b459f30ff28dc89416bca4bb0b32f4090756000dceaf7560a3"
   end
 
   depends_on "numpy"
