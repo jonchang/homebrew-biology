@@ -5,7 +5,6 @@ class Phylonet < Formula
   sha256 "3919c3408fb5f7af0d465738475cc20d2952eba37e09c51ee3f3ba8df966a8d4"
   revision 1
 
-  bottle :unneeded
   depends_on "openjdk"
 
   def install
