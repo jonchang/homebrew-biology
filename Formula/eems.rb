@@ -7,9 +7,9 @@ class Eems < Formula
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
+  depends_on "cmake" => :build
   depends_on "eigen" => :build
   depends_on "libtool" => :build
-  depends_on "cmake" => :build
   depends_on "boost"
 
   resource "libplinkio" do
