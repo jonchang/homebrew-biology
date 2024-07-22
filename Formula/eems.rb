@@ -1,39 +1,28 @@
 class Eems < Formula
   desc "Estimating Effective Migration Surfaces"
   homepage "https://github.com/dipetkov/eems"
-  url "https://github.com/dipetkov/eems.git", revision: "42bc6c7379295b91f38eedf0a3723e1bf3cf4264"
-  version "2018.09.17"
-  revision 2
+  url "https://github.com/dipetkov/eems.git", revision: "34ebbb64919db368a6d857476b2097e7578d9da0"
+  version "2023.10.28"
   head stable.url
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
   depends_on "eigen" => :build
   depends_on "libtool" => :build
+  depends_on "cmake" => :build
   depends_on "boost"
 
   resource "libplinkio" do
-    url "https://github.com/mfranberg/libplinkio/releases/download/0.3.1/libplinkio-0.3.1.tar.gz"
-    sha256 "fa82d31dc1499126a8a1ab9af2ab64cc709c69ee811fe8c581ed5d9fe8ea1576"
-    patch :DATA # disables Python bindings
+    url "https://github.com/mfranberg/libplinkio/archive/refs/tags/v0.9.8.tar.gz"
+    sha256 "de54dd4789b2da9b937a1f445dc6976153211dc35b4376a4cf561ad2ee861075"
   end
 
   def install
     # Build libplinkio, needed for bed2diffs_v*
     resource("libplinkio").stage do
-      # Hack at autotools to avoid building Python deps
-      inreplace "Makefile.am", "py-plinkio", ""
-      inreplace "Makefile.in", "py-plinkio", ""
-      system "autoreconf", "-fvi"
-
-      mkdir "build" do
-        system "../configure", "--prefix=#{libexec}",
-                               "--disable-dependency-tracking",
-                               "--disable-debug",
-                               "--disable-silent-rules",
-                               "--disable-tests"
-        system "make", "install"
-      end
+      system "cmake", "-S", ".", "-B", "build", *std_cmake_args(install_prefix: libexec)
+      system "cmake", "--build", "build"
+      system "cmake", "--install", "build"
     end
 
     # Set up Make variables
@@ -92,49 +81,3 @@ class Eems < Formula
     system "#{bin}/runeems_snps", "--params", "params.ini"
   end
 end
-__END__
-diff --git a/configure.ac b/configure.ac
-index 2c2175f..5d31b31 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -3,7 +3,7 @@
-
- AC_PREREQ(2.61)
- AC_INIT([libplinkio], [0.3.1], [mattias.franberg@googlemail.com])
--AM_INIT_AUTOMAKE([foreign -Wall -Werror])
-+AM_INIT_AUTOMAKE([foreign -Wall subdir-objects])
- AC_CONFIG_SRCDIR([src/fam.c])
- AC_CONFIG_MACRO_DIR([m4])
-
-@@ -15,23 +15,6 @@ AM_CONDITIONAL(GCC, test "$GCC" = yes)
- # Checks for libraries.
- LT_INIT
-
--# Python 
--AM_PATH_PYTHON([2.7])
--AC_ARG_VAR([PYTHON_INCLUDE], [Include flags for python, bypassing python-config])
--AC_ARG_VAR([PYTHON_CONFIG], [Path to python-config])
--AS_IF([test -z "$PYTHON_INCLUDE"], [
--    AS_IF([test -z "$PYTHON_CONFIG"], [
--        AC_PATH_PROGS([PYTHON_CONFIG],
--                      [python$PYTHON_VERSION-config python-config],
--                      [no],
--                      [`dirname $PYTHON`])
--        AS_IF([test "$PYTHON_CONFIG" = no], [AC_MSG_ERROR([cannot find python-config for $PYTHON.])])
--    ])
--    AC_MSG_CHECKING([python include flags])
--    PYTHON_INCLUDE=`$PYTHON_CONFIG --includes`
--    AC_MSG_RESULT([$PYTHON_INCLUDE])
--])
--
-
- # Checks for header files.
- AC_HEADER_STDC
-@@ -60,7 +43,7 @@ if test "$WITH_TESTS" = "yes"; then
-     AC_CONFIG_SUBDIRS([libs/cmockery])
- fi
-
--AC_CONFIG_FILES([Makefile src/Makefile libs/libcsv/Makefile tests/Makefile py-plinkio/Makefile])
-+AC_CONFIG_FILES([Makefile src/Makefile libs/libcsv/Makefile tests/Makefile])
-
- AC_OUTPUT
